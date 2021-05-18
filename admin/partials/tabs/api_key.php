@@ -4,10 +4,10 @@
     <legend class="screen-reader-text">
         <span><?php esc_html_e('Connect your store to Squalomail', 'squalomail-for-woocommerce');?></span>
     </legend>
-    <a id="squalomail-oauth-connect" class="button button-primary tab-content-submit oauth-connect"><?php $has_valid_api_key ? esc_html_e('Reconnect account', 'squalomail-for-woocommerce') : esc_html_e('Connect account', 'squalomail-for-woocommerce');?></a>
-    <a class="button create-account" href='#sqm-woocommerce-create-account'>Create account</a>
 
-    <input type="hidden" id="<?php echo $this->plugin_name; ?>-squalomail-api-key" name="<?php echo $this->plugin_name; ?>[squalomail_api_key]" value="<?php echo isset($options['squalomail_api_key']) ? $options['squalomail_api_key'] : '' ?>" required/>
+    <input placeholder="API key" style="display: block; width: 300px; max-width: 100%; margin-bottom: 15px;" type="text" id="<?php echo $this->plugin_name; ?>-squalomail-api-key" name="<?php echo $this->plugin_name; ?>[squalomail_api_key]" value="<?php echo isset($options['squalomail_api_key']) ? $options['squalomail_api_key'] : '' ?>" required/>
+
+    <a id="squalomail-oauth-connect" class="button button-primary tab-content-submit oauth-connect"><?php $has_valid_api_key ? esc_html_e('Reconnect account', 'squalomail-for-woocommerce') : esc_html_e('Connect account', 'squalomail-for-woocommerce');?></a>
     
     <?php if ($has_valid_api_key) :?>
         <p id="squalomail-oauth-api-key-valid"><?php esc_html_e('Already connected. You can reconnect with another Squalomail account if you want.' , 'squalomail-for-woocommerce');?></p>

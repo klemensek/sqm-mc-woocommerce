@@ -715,30 +715,16 @@ class SqualoMail_WooCommerce_Admin extends SqualoMail_WooCommerce_Options {
      * Squalomail OAuth connection finish
      */
     public function squalomail_woocommerce_ajax_oauth_finish()
-    {   
-        $args = array(
-            'domain' => site_url(),
-            'secret' => get_site_transient('squalomail-woocommerce-oauth-secret'),
-            'token' => $_POST['token']
-        );
-
-        $pload = array(
-            'headers' => array( 
-                'Content-type' => 'application/json',
-            ),
-            'body' => json_encode($args)
-        );
-
-        $response = wp_remote_post( 'https://woocommerce.squalomailapp.com/api/finish', $pload);
-        if ($response['response']['code'] == 200 ){
-			delete_site_transient('squalomail-woocommerce-oauth-secret');
-            // save api_key? If yes, we can skip api key validation for validatePostApiKey();
-            wp_send_json_success($response);
-        }
-        else wp_send_json_error( $response );
-        
+    {  
+		$token = $_POST['token'];
+		$api = new SqualoMail_WooCommerce_SqualoMailApi($token);
+		try {
+			$result = $api->ping(false, true);
+			wp_send_json_success([]);
+		} catch (SqualoMail_WooCommerce_Error $e) {
+			wp_send_json_error(['error' => $e->getMessage()]);
+		}
     }
-
 
 	public function squalomail_woocommerce_ajax_create_account_check_username () {
 		$user = $_POST['username'];
