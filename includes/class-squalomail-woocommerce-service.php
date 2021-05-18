@@ -483,7 +483,7 @@ class MailChimp_Service extends MailChimp_WooCommerce_Options
 
         $cookie_duration = $this->getCookieDuration();
 
-        // if we have a query string of the sqm_cart_id in the URL, that means we are sending a campaign from MC
+        // if we have a query string of the sqm_cart_id in the URL, that means we are sending a campaign from SQM
         if (isset($_GET['sqm_cart_id']) && !isset($_GET['removed_item'])) {
 
             // try to pull the cart from the database.

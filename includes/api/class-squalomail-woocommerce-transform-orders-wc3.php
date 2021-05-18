@@ -185,7 +185,7 @@ class MailChimp_WooCommerce_Transform_Orders
                 }
             }
 
-            // if we don't have a product post with this id, we need to add a deleted product to the MC side
+            // if we don't have a product post with this id, we need to add a deleted product to the SQM side
             if (!$product || ($trashed = 'trash' === $product->get_status())) {
 
                 $pid = $order_detail->get_product_id();
@@ -300,7 +300,7 @@ class MailChimp_WooCommerce_Transform_Orders
      */
     protected function transformLineItem($key, $order_detail)
     {
-        // fire up a new MC line item
+        // fire up a new SQM line item
         $item = new MailChimp_WooCommerce_LineItem();
         $item->setId($key);
 

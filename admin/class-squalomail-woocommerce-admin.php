@@ -434,7 +434,7 @@ class MailChimp_WooCommerce_Admin extends MailChimp_WooCommerce_Options {
 		
 		$data = $this->mailchimp_set_store_currency_code($new_currency_code);
 		
-		// sync the store with MC
+		// sync the store with SQM
 		try {
 			$store_created = $this->syncStore($data);
 		}
@@ -903,7 +903,7 @@ class MailChimp_WooCommerce_Admin extends MailChimp_WooCommerce_Options {
 		$this->setData('validation.store_info', true);
 
 		if ($this->hasValidMailChimpList()) {
-			// sync the store with MC
+			// sync the store with SQM
 			try {
 				$this->syncStore(array_merge($this->getOptions(), $data));
 			}
@@ -1084,12 +1084,12 @@ class MailChimp_WooCommerce_Admin extends MailChimp_WooCommerce_Options {
 			$data['mailchimp_list'] = $this->updateMailChimpList(array_merge($this->getOptions(), $data));
 		}
 
-		// as long as we have a list set, and it's currently in MC as a valid list, let's sync the store.
+		// as long as we have a list set, and it's currently in SQM as a valid list, let's sync the store.
 		if (!empty($data['mailchimp_list']) && $this->api()->hasList($data['mailchimp_list'])) {
 
             $this->setData('validation.newsletter_settings', true);
 
-			// sync the store with MC
+			// sync the store with SQM
 			try {
 				$store_created = $this->syncStore(array_merge($this->getOptions(), $data));
 			}

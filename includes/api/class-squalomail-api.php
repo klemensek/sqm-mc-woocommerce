@@ -1374,7 +1374,7 @@ class MailChimp_WooCommerce_MailChimpApi
             //print_r(array('id' => $id, 'store' => $store_id));die();
             return (bool) $this->delete("ecommerce/stores/{$store_id}/promo-rules/{$id}");
         } catch (MailChimp_WooCommerce_Error $e) {
-            //\Log::error("MC::deletePromoRule :: {$rule->getId()} :: {$e->getMessage()} on {$e->getLine()} in {$e->getFile()}");
+            //\Log::error("SQM::deletePromoRule :: {$rule->getId()} :: {$e->getMessage()} on {$e->getLine()} in {$e->getFile()}");
             return false;
         }
     }
