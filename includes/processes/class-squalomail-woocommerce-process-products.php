@@ -8,7 +8,7 @@
  * Date: 7/14/16
  * Time: 10:57 AM
  */
-class MailChimp_WooCommerce_Process_Products extends MailChimp_WooCommerce_Abstract_Sync
+class SqualoMail_WooCommerce_Process_Products extends SqualoMail_WooCommerce_Abstract_Sync
 {
     /**
      * @var string
@@ -17,7 +17,7 @@ class MailChimp_WooCommerce_Process_Products extends MailChimp_WooCommerce_Abstr
 
     public static function push()
     {
-        $job = new MailChimp_WooCommerce_Process_Products();
+        $job = new SqualoMail_WooCommerce_Process_Products();
         $job->flagStartSync();
         squalomail_handle_or_queue($job, 0);
     }
@@ -32,7 +32,7 @@ class MailChimp_WooCommerce_Process_Products extends MailChimp_WooCommerce_Abstr
     }
 
     /**
-     * Called after all the products have been iterated and processed into MailChimp
+     * Called after all the products have been iterated and processed into SqualoMail
      */
     protected function complete()
     {

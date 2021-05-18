@@ -1,17 +1,17 @@
 <?php
 
 /**
- * Created by MailChimp.
+ * Created by SqualoMail.
  *
  * Name: Ryan Hungate
  * Email: ryan@vextras.com
  * Date: 2/22/16
  * Time: 3:45 PM
  */
-abstract class MailChimp_WooCommerce_Options
+abstract class SqualoMail_WooCommerce_Options
 {
     /**
-     * @var MailChimp_WooCommerce_MailChimpApi
+     * @var SqualoMail_WooCommerce_SqualoMailApi
      */
     protected $api;
     protected $plugin_name = 'squalomail-woocommerce';
@@ -245,12 +245,12 @@ abstract class MailChimp_WooCommerce_Options
     }
 
     /**
-     * @return MailChimp_WooCommerce_MailChimpApi
+     * @return SqualoMail_WooCommerce_SqualoMailApi
      */
     public function api()
     {
         if (empty($this->api)) {
-            $this->api = new MailChimp_WooCommerce_MailChimpApi($this->getOption('squalomail_api_key', false));
+            $this->api = new SqualoMail_WooCommerce_SqualoMailApi($this->getOption('squalomail_api_key', false));
         }
 
         return $this->api;

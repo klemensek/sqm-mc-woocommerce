@@ -1,6 +1,6 @@
 <?php
 // if we don't have a valid api key we need to redirect back to the 'api_key' tab.
-if (!$handler->hasValidApiKey() || (!isset($squalomail_lists) && ($squalomail_lists = $handler->getMailChimpLists()) === false)) {
+if (!$handler->hasValidApiKey() || (!isset($squalomail_lists) && ($squalomail_lists = $handler->getSqualoMailLists()) === false)) {
     wp_redirect('admin.php?page=squalomail-woocommerce&tab=api_key&error_notice=missing_api_key');
 
 }
@@ -116,7 +116,7 @@ $list_is_configured = isset($options['squalomail_list']) && (!empty($options['sq
             <select id="<?php echo $this->plugin_name; ?>-campaign-language-label" name="<?php echo $this->plugin_name; ?>[campaign_language]" required>
                 <?php $selected_locale = isset($options['store_locale']) && !empty($options['store_locale']) ? $options['store_locale'] : get_locale(); ?> ?>
                 <?php
-                foreach(MailChimp_Api_Locales::all() as $locale_key => $local_value) {
+                foreach(SqualoMail_Api_Locales::all() as $locale_key => $local_value) {
                     echo '<option value="' . esc_attr( $locale_key ) . '" ' . selected($locale_key === $selected_locale, true, false ) . '>' . esc_html( $local_value ) . '</option>';
                 }
                 ?>

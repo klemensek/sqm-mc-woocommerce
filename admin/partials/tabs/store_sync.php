@@ -33,7 +33,7 @@ if (!empty($last_updated_time)) {
 
 // if we have a transient set to start the sync on this page view, initiate it now that the values have been saved.
 if ((bool) get_site_transient('squalomail_woocommerce_start_sync', false)) {
-    MailChimp_WooCommerce_Admin::connect()->startSync();
+    SqualoMail_WooCommerce_Admin::connect()->startSync();
 }
 
 if (($squalomail_api = squalomail_get_api()) && ($store = $squalomail_api->getStore($store_id))) {

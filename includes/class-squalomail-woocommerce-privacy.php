@@ -1,6 +1,6 @@
 <?php
 
-class MailChimp_WooCommerce_Privacy
+class SqualoMail_WooCommerce_Privacy
 {
     /**
      * Privacy policy
@@ -13,7 +13,7 @@ class MailChimp_WooCommerce_Privacy
                 'https://squalomail.com/legal/privacy/'
                 
             );
-            wp_add_privacy_policy_content('MailChimp for WooCommerce', wp_kses_post(wpautop($content, false)));
+            wp_add_privacy_policy_content('SqualoMail for WooCommerce', wp_kses_post(wpautop($content, false)));
         }
     }
 
@@ -24,7 +24,7 @@ class MailChimp_WooCommerce_Privacy
     public function register_exporter($exporters)
     {
         $exporters['squalomail-woocommerce'] = array(
-            'exporter_friendly_name' => __('MailChimp for WooCommerce'),
+            'exporter_friendly_name' => __('SqualoMail for WooCommerce'),
             'callback'               => array($this, 'export'),
         );
         return $exporters;
@@ -37,7 +37,7 @@ class MailChimp_WooCommerce_Privacy
     public function register_eraser($erasers)
     {
         $erasers['squalomail-woocommerce'] = array(
-            'eraser_friendly_name' => __('MailChimp for WooCommerce'),
+            'eraser_friendly_name' => __('SqualoMail for WooCommerce'),
             'callback'               => array($this, 'erase'),
         );
         return $erasers;
@@ -75,7 +75,7 @@ class MailChimp_WooCommerce_Privacy
             'data' => array(
                 array(
                     'group_id'    => 'squalomail_cart',
-                    'group_label' => __( 'MailChimp Shopping Cart Data', 'squalomail-for-woocommerce' ),
+                    'group_label' => __( 'SqualoMail Shopping Cart Data', 'squalomail-for-woocommerce' ),
                     'item_id'     => 'mailing-shopping-cart-1',
                     'data'        => array(
                         array(

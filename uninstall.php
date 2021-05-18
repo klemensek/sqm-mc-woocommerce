@@ -22,7 +22,7 @@
  * @link       https://squalomail.com
  * @since      1.0.1
  *
- * @package    MailChimp_WooCommerce
+ * @package    SqualoMail_WooCommerce
  */
 
 // If uninstall not called from WordPress, then exit.
@@ -40,9 +40,9 @@ function squalomail_woocommerce_uninstall() {
             if (isset($options['squalomail_api_key'])) {
                 $store_id = get_option('squalomail-woocommerce-store_id', false);
                 if (!empty($store_id)) {
-                    $api = new MailChimp_WooCommerce_MailChimpApi($options['squalomail_api_key']);
+                    $api = new SqualoMail_WooCommerce_SqualoMailApi($options['squalomail_api_key']);
                     $result = $api->deleteStore($store_id) ? 'has been deleted' : 'did not delete';
-                    error_log("store id {$store_id} {$result} MailChimp");
+                    error_log("store id {$store_id} {$result} SqualoMail");
                 }
             }
         }

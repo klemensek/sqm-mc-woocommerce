@@ -8,15 +8,15 @@
  * Date: 7/14/16
  * Time: 11:54 AM
  */
-abstract class MailChimp_WooCommerce_Abstract_Sync extends Squalomail_Woocommerce_Job
+abstract class SqualoMail_WooCommerce_Abstract_Sync extends Squalomail_Woocommerce_Job
 {
     /**
-     * @var MailChimp_WooCommerce_Api
+     * @var SqualoMail_WooCommerce_Api
      */
     private $api;
 
     /**
-     * @var MailChimp_WooCommerce_MailChimpApi
+     * @var SqualoMail_WooCommerce_SqualoMailApi
      */
     private $sqm;
 
@@ -41,7 +41,7 @@ abstract class MailChimp_WooCommerce_Abstract_Sync extends Squalomail_Woocommerc
     public $items_per_page = 100;
 
     /**
-     * MailChimp_WooCommerce_Abstract_Sync constructor.
+     * SqualoMail_WooCommerce_Abstract_Sync constructor.
      * @param int $current_page
      */
     public function __construct($current_page = 1)
@@ -182,13 +182,13 @@ abstract class MailChimp_WooCommerce_Abstract_Sync extends Squalomail_Woocommerc
         foreach ($page->items as $resource) {
            switch ($this->getResourceType()) {
                 case 'coupons':
-                    squalomail_handle_or_queue(new MailChimp_WooCommerce_SingleCoupon($resource));
+                    squalomail_handle_or_queue(new SqualoMail_WooCommerce_SingleCoupon($resource));
                    break;
                 case 'products':
-                    squalomail_handle_or_queue(new MailChimp_WooCommerce_Single_Product($resource));
+                    squalomail_handle_or_queue(new SqualoMail_WooCommerce_Single_Product($resource));
                    break;
                 case 'orders':
-                    $order = new MailChimp_WooCommerce_Single_Order($resource);
+                    $order = new SqualoMail_WooCommerce_Single_Order($resource);
                     $order->set_full_sync(true);
                     squalomail_handle_or_queue($order);
                    break;
@@ -234,7 +234,7 @@ abstract class MailChimp_WooCommerce_Abstract_Sync extends Squalomail_Woocommerc
     /**
      * @param $page
      * @param null $resource
-     * @return MailChimp_WooCommerce_Abstract_Sync
+     * @return SqualoMail_WooCommerce_Abstract_Sync
      */
     public function setResourcePagePointer($page, $resource = null)
     {
@@ -258,7 +258,7 @@ abstract class MailChimp_WooCommerce_Abstract_Sync extends Squalomail_Woocommerc
 
     /**
      * @param null $resource
-     * @return MailChimp_WooCommerce_Abstract_Sync
+     * @return SqualoMail_WooCommerce_Abstract_Sync
      */
     protected function setResourceCompleteTime($resource = null)
     {
@@ -367,23 +367,23 @@ abstract class MailChimp_WooCommerce_Abstract_Sync extends Squalomail_Woocommerc
     }
 
     /**
-     * @return MailChimp_WooCommerce_Api
+     * @return SqualoMail_WooCommerce_Api
      */
     protected function api()
     {
         if (empty($this->api)) {
-            $this->api = new MailChimp_WooCommerce_Api();
+            $this->api = new SqualoMail_WooCommerce_Api();
         }
         return $this->api;
     }
 
     /**
-     * @return MailChimp_WooCommerce_MailChimpApi
+     * @return SqualoMail_WooCommerce_SqualoMailApi
      */
     protected function squalomail()
     {
         if (empty($this->sqm)) {
-            $this->sqm = new MailChimp_WooCommerce_MailChimpApi($this->getOption('squalomail_api_key'));
+            $this->sqm = new SqualoMail_WooCommerce_SqualoMailApi($this->getOption('squalomail_api_key'));
         }
         return $this->sqm;
     }

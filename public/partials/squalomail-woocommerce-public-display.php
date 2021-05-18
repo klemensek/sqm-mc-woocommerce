@@ -8,8 +8,8 @@
  * @link       https://squalomail.com
  * @since      1.0.1
  *
- * @package    MailChimp_WooCommerce
- * @subpackage MailChimp_WooCommerce/public/partials
+ * @package    SqualoMail_WooCommerce
+ * @subpackage SqualoMail_WooCommerce/public/partials
  */
 ?>
 

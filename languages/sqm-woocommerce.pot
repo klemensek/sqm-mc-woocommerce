@@ -117,7 +117,7 @@ msgid "When shopping, we keep a record of your email and the cart contents for u
 msgstr ""
 
 #: includes/class-squalomail-woocommerce-privacy.php:78
-msgid "MailChimp Shopping Cart Data"
+msgid "SqualoMail Shopping Cart Data"
 msgstr ""
 
 #: includes/class-squalomail-woocommerce-privacy.php:82
@@ -710,7 +710,7 @@ msgid "Disconnect Store"
 msgstr ""
 
 #: admin/partials/tabs/plugin_settings.php:49
-msgid "Disconnect your store from MailChimp. This action will remove all entries from the database but you will be able to reconnect anytime."
+msgid "Disconnect your store from SqualoMail. This action will remove all entries from the database but you will be able to reconnect anytime."
 msgstr ""
 
 #: admin/partials/tabs/api_key.php:5

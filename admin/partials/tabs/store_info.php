@@ -1,6 +1,6 @@
 <?php
 
-$handler = MailChimp_WooCommerce_Admin::connect();
+$handler = SqualoMail_WooCommerce_Admin::connect();
 
 // if we don't have a valid api key we need to redirect back to the 'api_key' tab.
 if (!$handler->hasValidApiKey()) {
@@ -12,7 +12,7 @@ if (!$handler->hasValidApiKey()) {
     <input type="hidden" name="squalomail_active_settings_tab" value="store_info"/>
     <?php 
         $current_currency = isset($options['store_currency_code']) ? $options['store_currency_code'] : get_woocommerce_currency();
-        $current_currency_data = MailChimp_WooCommerce_CurrencyCodes::getCurrency($current_currency);
+        $current_currency_data = SqualoMail_WooCommerce_CurrencyCodes::getCurrency($current_currency);
     ?>
     <input type="hidden" value="<?php echo isset($current_currency_data) ? $current_currency . ' | ' .  $current_currency_data['name']: $current_currency ?>" disabled/>
     <input type="hidden" value="<?php echo squalomail_get_timezone(true)?>" disabled/>
@@ -139,7 +139,7 @@ if (!$handler->hasValidApiKey()) {
                 <option disabled selected value="<?= __('','squalomail-for-woocommerce')?>"><?= __("Select store's locale",'squalomail-for-woocommerce')?></option>
                 <?php 
                 $selected_locale = isset($options['store_locale']) && !empty($options['store_locale']) ? $options['store_locale'] : get_locale(); ?>
-                <?php foreach(MailChimp_Api_Locales::all() as $locale_key => $local_value) : ?>
+                <?php foreach(SqualoMail_Api_Locales::all() as $locale_key => $local_value) : ?>
                     <option value="<?php echo esc_attr( $locale_key ) . '" ' . selected($locale_key === $selected_locale, true, false ); ?>"> <?php esc_html_e( $local_value ) ?> </option>;
                 <?php endforeach;?>
             </select>

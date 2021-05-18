@@ -10,63 +10,63 @@ $squalomail_woocommerce_spl_autoloader = true;
 spl_autoload_register(function($class) {
     $classes = array(
         // includes root
-        'MailChimp_Service' => 'includes/class-squalomail-woocommerce-service.php',
-        'MailChimp_WooCommerce_Options' => 'includes/class-squalomail-woocommerce-options.php',
-        'MailChimp_Newsletter' => 'includes/class-squalomail-woocommerce-newsletter.php',
-        'MailChimp_WooCommerce_Loader' => 'includes/class-squalomail-woocommerce-loader.php',
-        'MailChimp_WooCommerce_i18n' => 'includes/class-squalomail-woocommerce-i18n.php',
-        'MailChimp_WooCommerce_Deactivator' => 'includes/class-squalomail-woocommerce-deactivator.php',
-        'MailChimp_WooCommerce_Activator' => 'includes/class-squalomail-woocommerce-activator.php',
-        'MailChimp_WooCommerce' => 'includes/class-squalomail-woocommerce.php',
-        'MailChimp_WooCommerce_Privacy' => 'includes/class-squalomail-woocommerce-privacy.php',
+        'SqualoMail_Service' => 'includes/class-squalomail-woocommerce-service.php',
+        'SqualoMail_WooCommerce_Options' => 'includes/class-squalomail-woocommerce-options.php',
+        'SqualoMail_Newsletter' => 'includes/class-squalomail-woocommerce-newsletter.php',
+        'SqualoMail_WooCommerce_Loader' => 'includes/class-squalomail-woocommerce-loader.php',
+        'SqualoMail_WooCommerce_i18n' => 'includes/class-squalomail-woocommerce-i18n.php',
+        'SqualoMail_WooCommerce_Deactivator' => 'includes/class-squalomail-woocommerce-deactivator.php',
+        'SqualoMail_WooCommerce_Activator' => 'includes/class-squalomail-woocommerce-activator.php',
+        'SqualoMail_WooCommerce' => 'includes/class-squalomail-woocommerce.php',
+        'SqualoMail_WooCommerce_Privacy' => 'includes/class-squalomail-woocommerce-privacy.php',
         'Squalomail_Woocommerce_Deactivation_Survey' => 'includes/class-squalomail-woocommerce-deactivation-survey.php',
-        'MailChimp_WooCommerce_Rest_Api' => 'includes/class-squalomail-woocommerce-rest-api.php',
+        'SqualoMail_WooCommerce_Rest_Api' => 'includes/class-squalomail-woocommerce-rest-api.php',
         'Squalomail_Wocoomerce_CLI' => 'includes/class-squalomail-woocommerce-cli.php',
         
         // includes/api/assets
-        'MailChimp_WooCommerce_Address' => 'includes/api/assets/class-squalomail-address.php',
-        'MailChimp_WooCommerce_Cart' => 'includes/api/assets/class-squalomail-cart.php',
-        'MailChimp_WooCommerce_Customer' => 'includes/api/assets/class-squalomail-customer.php',
-        'MailChimp_WooCommerce_LineItem' => 'includes/api/assets/class-squalomail-line-item.php',
-        'MailChimp_WooCommerce_Order' => 'includes/api/assets/class-squalomail-order.php',
-        'MailChimp_WooCommerce_Product' => 'includes/api/assets/class-squalomail-product.php',
-        'MailChimp_WooCommerce_ProductVariation' => 'includes/api/assets/class-squalomail-product-variation.php',
-        'MailChimp_WooCommerce_PromoCode' => 'includes/api/assets/class-squalomail-promo-code.php',
-        'MailChimp_WooCommerce_PromoRule' => 'includes/api/assets/class-squalomail-promo-rule.php',
-        'MailChimp_WooCommerce_Store' => 'includes/api/assets/class-squalomail-store.php',
+        'SqualoMail_WooCommerce_Address' => 'includes/api/assets/class-squalomail-address.php',
+        'SqualoMail_WooCommerce_Cart' => 'includes/api/assets/class-squalomail-cart.php',
+        'SqualoMail_WooCommerce_Customer' => 'includes/api/assets/class-squalomail-customer.php',
+        'SqualoMail_WooCommerce_LineItem' => 'includes/api/assets/class-squalomail-line-item.php',
+        'SqualoMail_WooCommerce_Order' => 'includes/api/assets/class-squalomail-order.php',
+        'SqualoMail_WooCommerce_Product' => 'includes/api/assets/class-squalomail-product.php',
+        'SqualoMail_WooCommerce_ProductVariation' => 'includes/api/assets/class-squalomail-product-variation.php',
+        'SqualoMail_WooCommerce_PromoCode' => 'includes/api/assets/class-squalomail-promo-code.php',
+        'SqualoMail_WooCommerce_PromoRule' => 'includes/api/assets/class-squalomail-promo-rule.php',
+        'SqualoMail_WooCommerce_Store' => 'includes/api/assets/class-squalomail-store.php',
 
         // includes/api/errors
-        'MailChimp_WooCommerce_Error' => 'includes/api/errors/class-squalomail-error.php',
-        'MailChimp_WooCommerce_RateLimitError' => 'includes/api/errors/class-squalomail-rate-limit-error.php',
-        'MailChimp_WooCommerce_ServerError' => 'includes/api/errors/class-squalomail-server-error.php',
+        'SqualoMail_WooCommerce_Error' => 'includes/api/errors/class-squalomail-error.php',
+        'SqualoMail_WooCommerce_RateLimitError' => 'includes/api/errors/class-squalomail-rate-limit-error.php',
+        'SqualoMail_WooCommerce_ServerError' => 'includes/api/errors/class-squalomail-server-error.php',
 
         // includes/api/helpers
-        'MailChimp_WooCommerce_CurrencyCodes' => 'includes/api/helpers/class-squalomail-woocommerce-api-currency-codes.php',
-        'MailChimp_Api_Locales' => 'includes/api/helpers/class-squalomail-woocommerce-api-locales.php',
+        'SqualoMail_WooCommerce_CurrencyCodes' => 'includes/api/helpers/class-squalomail-woocommerce-api-currency-codes.php',
+        'SqualoMail_Api_Locales' => 'includes/api/helpers/class-squalomail-woocommerce-api-locales.php',
 
         // includes/api
-        'MailChimp_WooCommerce_MailChimpApi' => 'includes/api/class-squalomail-api.php',
-        'MailChimp_WooCommerce_Api' => 'includes/api/class-squalomail-woocommerce-api.php',
-        'MailChimp_WooCommerce_CreateListSubmission' => 'includes/api/class-squalomail-woocommerce-create-list-submission.php',
-        'MailChimp_WooCommerce_Transform_Coupons' => 'includes/api/class-squalomail-woocommerce-transform-coupons.php',
-        'MailChimp_WooCommerce_Transform_Orders' => 'includes/api/class-squalomail-woocommerce-transform-orders-wc3.php',
-        'MailChimp_WooCommerce_Transform_Products' => 'includes/api/class-squalomail-woocommerce-transform-products.php',
+        'SqualoMail_WooCommerce_SqualoMailApi' => 'includes/api/class-squalomail-api.php',
+        'SqualoMail_WooCommerce_Api' => 'includes/api/class-squalomail-woocommerce-api.php',
+        'SqualoMail_WooCommerce_CreateListSubmission' => 'includes/api/class-squalomail-woocommerce-create-list-submission.php',
+        'SqualoMail_WooCommerce_Transform_Coupons' => 'includes/api/class-squalomail-woocommerce-transform-coupons.php',
+        'SqualoMail_WooCommerce_Transform_Orders' => 'includes/api/class-squalomail-woocommerce-transform-orders-wc3.php',
+        'SqualoMail_WooCommerce_Transform_Products' => 'includes/api/class-squalomail-woocommerce-transform-products.php',
 
         // includes/processes
         'Squalomail_Woocommerce_Job' => 'includes/processes/class-squalomail-woocommerce-job.php',
-        'MailChimp_WooCommerce_Abstract_Sync' => 'includes/processes/class-squalomail-woocommerce-abstract-sync.php',
-        'MailChimp_WooCommerce_Cart_Update' => 'includes/processes/class-squalomail-woocommerce-cart-update.php',
-        'MailChimp_WooCommerce_Process_Coupons' => 'includes/processes/class-squalomail-woocommerce-process-coupons.php',
-        'MailChimp_WooCommerce_Process_Orders' => 'includes/processes/class-squalomail-woocommerce-process-orders.php',
-        'MailChimp_WooCommerce_Process_Products' => 'includes/processes/class-squalomail-woocommerce-process-products.php',
-        'MailChimp_WooCommerce_SingleCoupon' => 'includes/processes/class-squalomail-woocommerce-single-coupon.php',
-        'MailChimp_WooCommerce_Single_Order' => 'includes/processes/class-squalomail-woocommerce-single-order.php',
-        'MailChimp_WooCommerce_Single_Product' => 'includes/processes/class-squalomail-woocommerce-single-product.php',
-        'MailChimp_WooCommerce_User_Submit' => 'includes/processes/class-squalomail-woocommerce-user-submit.php',
-        'MailChimp_WooCommerce_Process_Full_Sync_Manager' => 'includes/processes/class-squalomail-woocommerce-full-sync-manager.php',
+        'SqualoMail_WooCommerce_Abstract_Sync' => 'includes/processes/class-squalomail-woocommerce-abstract-sync.php',
+        'SqualoMail_WooCommerce_Cart_Update' => 'includes/processes/class-squalomail-woocommerce-cart-update.php',
+        'SqualoMail_WooCommerce_Process_Coupons' => 'includes/processes/class-squalomail-woocommerce-process-coupons.php',
+        'SqualoMail_WooCommerce_Process_Orders' => 'includes/processes/class-squalomail-woocommerce-process-orders.php',
+        'SqualoMail_WooCommerce_Process_Products' => 'includes/processes/class-squalomail-woocommerce-process-products.php',
+        'SqualoMail_WooCommerce_SingleCoupon' => 'includes/processes/class-squalomail-woocommerce-single-coupon.php',
+        'SqualoMail_WooCommerce_Single_Order' => 'includes/processes/class-squalomail-woocommerce-single-order.php',
+        'SqualoMail_WooCommerce_Single_Product' => 'includes/processes/class-squalomail-woocommerce-single-product.php',
+        'SqualoMail_WooCommerce_User_Submit' => 'includes/processes/class-squalomail-woocommerce-user-submit.php',
+        'SqualoMail_WooCommerce_Process_Full_Sync_Manager' => 'includes/processes/class-squalomail-woocommerce-full-sync-manager.php',
         
-        'MailChimp_WooCommerce_Public' => 'public/class-squalomail-woocommerce-public.php',
-        'MailChimp_WooCommerce_Admin' => 'admin/class-squalomail-woocommerce-admin.php',
+        'SqualoMail_WooCommerce_Public' => 'public/class-squalomail-woocommerce-public.php',
+        'SqualoMail_WooCommerce_Admin' => 'admin/class-squalomail-woocommerce-admin.php',
     );
 
     // if the file exists, require it
@@ -187,7 +187,7 @@ function squalomail_as_push( Squalomail_Woocommerce_Job $job, $delay = 0 ) {
  */
 function squalomail_handle_or_queue(Squalomail_Woocommerce_Job $job, $delay = 0)
 {   
-    if ($job instanceof \MailChimp_WooCommerce_Single_Order && isset($job->id)) {
+    if ($job instanceof \SqualoMail_WooCommerce_Single_Order && isset($job->id)) {
         // if this is a order process already queued - just skip this
         if (get_site_transient("squalomail_order_being_processed_{$job->id}") == true) {
             return;
@@ -344,16 +344,16 @@ function squalomail_get_user_tags_to_update($email = null, $order = null) {
 }
 
 /**
- * @return bool|MailChimp_WooCommerce_MailChimpApi
+ * @return bool|SqualoMail_WooCommerce_SqualoMailApi
  */
 function squalomail_get_api() {
 
-    if (($api = MailChimp_WooCommerce_MailChimpApi::getInstance())) {
+    if (($api = SqualoMail_WooCommerce_SqualoMailApi::getInstance())) {
         return $api;
     }
 
     if (($key = squalomail_get_api_key())) {
-        return MailChimp_WooCommerce_MailChimpApi::constructInstance($key);
+        return SqualoMail_WooCommerce_SqualoMailApi::constructInstance($key);
     }
 
     return false;
@@ -560,17 +560,17 @@ function activate_squalomail_woocommerce() {
     if (!squalomail_check_woocommerce_plugin_status()) {
         // Deactivate the plugin
         deactivate_plugins(__FILE__);
-        $error_message = __('The MailChimp For WooCommerce plugin requires the <a href="http://wordpress.org/extend/plugins/woocommerce/">WooCommerce</a> plugin to be active!', 'woocommerce');
+        $error_message = __('The SqualoMail For WooCommerce plugin requires the <a href="http://wordpress.org/extend/plugins/woocommerce/">WooCommerce</a> plugin to be active!', 'woocommerce');
         wp_die($error_message);
     }
-    MailChimp_WooCommerce_Activator::activate();
+    SqualoMail_WooCommerce_Activator::activate();
 }
 
 /**
  * Create the queue tables
  */
 function install_squalomail_queue() {
-    MailChimp_WooCommerce_Activator::create_queue_tables();
+    SqualoMail_WooCommerce_Activator::create_queue_tables();
 }
 
 /**
@@ -578,7 +578,7 @@ function install_squalomail_queue() {
  * This action is documented in includes/class-squalomail-woocommerce-deactivator.php
  */
 function deactivate_squalomail_woocommerce() {
-    MailChimp_WooCommerce_Deactivator::deactivate();
+    SqualoMail_WooCommerce_Deactivator::deactivate();
 }
 
 /**
@@ -777,10 +777,10 @@ function squalomail_update_connected_site_script_from_cdn() {
 }
 
 /**
- * @param MailChimp_WooCommerce_Store $store
+ * @param SqualoMail_WooCommerce_Store $store
  * @return bool
  */
-function squalomaili_refresh_connected_site_script(MailChimp_WooCommerce_Store $store) {
+function squalomaili_refresh_connected_site_script(SqualoMail_WooCommerce_Store $store) {
 
     $api = squalomail_get_api();
 
@@ -916,7 +916,7 @@ function squalomail_check_serialized_transient_changed($key, $value) {
  */
 function squalomail_get_transient_email_key($email) {
     $email = md5(trim(strtolower($email)));
-    return empty($email) ? false : 'MailChimp_WooCommerce_User_Submit@'.$email;
+    return empty($email) ? false : 'SqualoMail_WooCommerce_User_Submit@'.$email;
 }
 
 /**
@@ -1060,10 +1060,10 @@ function squalomail_is_done_syncing() {
 
 function run_squalomail_woocommerce() {
     $env = squalomail_environment_variables();
-    $plugin = new MailChimp_WooCommerce($env->environment, $env->version);
+    $plugin = new SqualoMail_WooCommerce($env->environment, $env->version);
     $plugin->run();
     if (isset($_GET['restart_order_sync']) && $_GET['restart_order_sync'] === '1') {
-        squalomail_as_push(new MailChimp_WooCommerce_Process_Orders());
+        squalomail_as_push(new SqualoMail_WooCommerce_Process_Orders());
     }
 }
 
@@ -1082,16 +1082,16 @@ function squalomail_get_allowed_capability() {
 }
 
 /**
- * @param MailChimp_WooCommerce_Order $order
+ * @param SqualoMail_WooCommerce_Order $order
  * @param null|boolean $subscribed
  */
-function squalomail_update_member_with_double_opt_in(MailChimp_WooCommerce_Order $order, $subscribed = null)
+function squalomail_update_member_with_double_opt_in(SqualoMail_WooCommerce_Order $order, $subscribed = null)
 {
     if (!squalomail_is_configured()) return;
 
     $api = squalomail_get_api();
 
-    // if the customer has a flag to double opt in - we need to push this data over to MailChimp as pending
+    // if the customer has a flag to double opt in - we need to push this data over to SqualoMail as pending
     // before the order is submitted.
     if ($subscribed) {
         if ($order->getCustomer()->requiresDoubleOptIn()) {
@@ -1123,7 +1123,7 @@ function squalomail_update_member_with_double_opt_in(MailChimp_WooCommerce_Order
         } else {
             // if we've set the wordpress user correctly on the customer
             if (($wordpress_user = $order->getCustomer()->getWordpressUser())) {
-                $user_submit = new MailChimp_WooCommerce_User_Submit($wordpress_user->ID, true, null);
+                $user_submit = new SqualoMail_WooCommerce_User_Submit($wordpress_user->ID, true, null);
                 $user_submit->handle();
             }
         }
@@ -1132,7 +1132,7 @@ function squalomail_update_member_with_double_opt_in(MailChimp_WooCommerce_Order
 
 // call server to update comm status
 function squalomail_update_communication_status() {
-    $plugin_admin = MailChimp_WooCommerce_Admin::instance();
+    $plugin_admin = SqualoMail_WooCommerce_Admin::instance();
     $original_opt = $plugin_admin->getData('comm.opt',0);
     $options = $plugin_admin->getOptions();
     if (is_array($options) && array_key_exists('admin_email', $options)) {
@@ -1142,7 +1142,7 @@ function squalomail_update_communication_status() {
 
 // call server to update comm status
 function squalomail_remove_communication_status() {
-    $plugin_admin = MailChimp_WooCommerce_Admin::instance();
+    $plugin_admin = SqualoMail_WooCommerce_Admin::instance();
     $original_opt = $plugin_admin->getData('comm.opt',0);
     $options = $plugin_admin->getOptions();
     if (is_array($options) && array_key_exists('admin_email', $options)) {
@@ -1191,9 +1191,9 @@ function squalomail_settings_errors() {
  * @param null $language
  * @param string $caller
  * @param string $status_if_new
- * @param MailChimp_WooCommerce_Order|null $order
- * @throws MailChimp_WooCommerce_Error
- * @throws MailChimp_WooCommerce_ServerError
+ * @param SqualoMail_WooCommerce_Order|null $order
+ * @throws SqualoMail_WooCommerce_Error
+ * @throws SqualoMail_WooCommerce_ServerError
  */
 function squalomail_member_data_update($user_email = null, $language = null, $caller = '', $status_if_new = 'transactional', $order = null, $gdpr_fields = null) {
     squalomail_debug('debug', "squalomail_member_data_update", array(
@@ -1284,7 +1284,7 @@ function squalomail_set_cookie($name, $value, $expire, $path, $domain = '', $sec
 if (defined( 'WP_CLI' ) && WP_CLI) {
     try {
         /**
-         * Service push to MailChimp
+         * Service push to SqualoMail
          *
          * <type>
          * : product_sync order_sync order product
@@ -1294,12 +1294,12 @@ if (defined( 'WP_CLI' ) && WP_CLI) {
                 switch($args[0]) {
 
                     case 'product_sync':
-                        squalomail_handle_or_queue(new MailChimp_WooCommerce_Process_Products());
+                        squalomail_handle_or_queue(new SqualoMail_WooCommerce_Process_Products());
                         WP_CLI::success("queued up the product sync!");
                         break;
 
                     case 'order_sync':
-                        squalomail_handle_or_queue(new MailChimp_WooCommerce_Process_Orders());
+                        squalomail_handle_or_queue(new SqualoMail_WooCommerce_Process_Orders());
                         WP_CLI::success("queued up the order sync!");
                         break;
 
@@ -1307,7 +1307,7 @@ if (defined( 'WP_CLI' ) && WP_CLI) {
                         if (!isset($args[1])) {
                             wp_die('You must specify an order id as the 2nd parameter.');
                         }
-                        squalomail_handle_or_queue(new MailChimp_WooCommerce_Single_Order($args[1]));
+                        squalomail_handle_or_queue(new SqualoMail_WooCommerce_Single_Order($args[1]));
                         WP_CLI::success("queued up the order {$args[1]}!");
                         break;
 
@@ -1315,7 +1315,7 @@ if (defined( 'WP_CLI' ) && WP_CLI) {
                         if (!isset($args[1])) {
                             wp_die('You must specify a product id as the 2nd parameter.');
                         }
-                        squalomail_handle_or_queue(new MailChimp_WooCommerce_Single_Product($args[1]));
+                        squalomail_handle_or_queue(new SqualoMail_WooCommerce_Single_Product($args[1]));
                         WP_CLI::success("queued up the product {$args[1]}!");
                         break;
                 }

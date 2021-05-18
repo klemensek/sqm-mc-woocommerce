@@ -1,6 +1,6 @@
 <?php
 // Grab plugin admin object
-$handler = MailChimp_WooCommerce_Admin::connect();
+$handler = SqualoMail_WooCommerce_Admin::connect();
 
 // Grab all options for this particular tab we're viewing.
 $options = get_option($this->plugin_name, array());
@@ -36,7 +36,7 @@ if (isset($options['squalomail_api_key'])) {
             $has_valid_api_key = true;
 
             // if we don't have a valid api key we need to redirect back to the 'api_key' tab.
-            if (($squalomail_lists = $handler->getMailChimpLists()) && is_array($squalomail_lists)) {
+            if (($squalomail_lists = $handler->getSqualoMailLists()) && is_array($squalomail_lists)) {
                 $show_newsletter_settings = true;
                 $allow_new_list = false;
                 $only_one_list = count($squalomail_lists) === 1;
