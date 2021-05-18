@@ -346,6 +346,7 @@ class SqualoMail_WooCommerce
 			$this->loader->add_action( 'init', $service, 'handleCampaignTracking' );
 
 			// order hooks
+            $this->loader->add_action('woocommerce_new_order', $service, 'handleNewOrder', 11, 1);
             $this->loader->add_action('woocommerce_order_status_changed', $service, 'handleOrderStatusChanged', 11, 3);
 
 			// refunds

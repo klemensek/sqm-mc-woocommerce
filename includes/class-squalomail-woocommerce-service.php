@@ -116,6 +116,20 @@ class SqualoMail_Service extends SqualoMail_WooCommerce_Options
     }
 
     /**
+      * @param $order_id
+      */
+    public function handleNewOrder($order_id)
+    {
+        if (!squalomail_is_configured()) {
+            return;
+        }
+    
+        squalomail_log('debug', "Order ID {$order_id} was created", array('tracking' => $tracking));
+        
+        $this->onOrderSave($order_id, null, true);
+    }
+
+    /**
      * @param $order_id
      * @param bool $is_admin
      */
@@ -128,7 +142,7 @@ class SqualoMail_Service extends SqualoMail_WooCommerce_Options
 
         if ("pending" == $old_status && ("processing" == $new_status || "completed" == $new_status)) {
             $tracking = $this->onNewOrder($order_id);
-            $newOrder = true;
+            // $newOrder = true;
         }
 
         squalomail_log('debug', "Order ID {$order_id} was {$old_status} and is now {$new_status}", array('new_order' => $newOrder, 'tracking' => $tracking));
