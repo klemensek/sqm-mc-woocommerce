@@ -336,7 +336,7 @@ class MailChimp_WooCommerce_Transform_Products
 
         $title = $item->get_name();
 
-        // only do this if we haven't pushed this product ID up yet to Mailchimp
+        // only do this if we haven't pushed this product ID up yet to Squalomail
         if (!($product = $api->getStoreProduct($store_id, "deleted_{$id}"))) {
             $product = new MailChimp_WooCommerce_Product();
 

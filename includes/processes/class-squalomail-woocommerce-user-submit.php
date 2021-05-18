@@ -8,7 +8,7 @@
  * Date: 11/14/16
  * Time: 9:38 AM
  */
-class MailChimp_WooCommerce_User_Submit extends Mailchimp_Woocommerce_Job
+class MailChimp_WooCommerce_User_Submit extends Squalomail_Woocommerce_Job
 {
     public static $handling_for = null;
 
@@ -65,7 +65,7 @@ class MailChimp_WooCommerce_User_Submit extends Mailchimp_Woocommerce_Job
     public function handle()
     {
         if (!squalomail_is_configured()) {
-            squalomail_debug(get_called_class(), 'Mailchimp is not configured properly');
+            squalomail_debug(get_called_class(), 'Squalomail is not configured properly');
             static::$handling_for = null;
             return false;
         }

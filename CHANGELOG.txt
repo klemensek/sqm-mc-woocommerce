@@ -17,7 +17,7 @@
 * adds GDPR fields for GDPR enabled audiences
 * locale settings from WooCommerce or WP are now auto-selected
 * support for notices in the wc-admin inbox 
-* moves Mailchimp plugin link to bottom of Woocommerce sub navigation
+* moves Squalomail plugin link to bottom of Woocommerce sub navigation
 = 2.4.5 =
 * fixed disconnect/reconnect list issue
 * fixed rest api doing it wrong alert
@@ -25,7 +25,7 @@
 * add filter for managing woocommerce plugins
 = 2.4.3 =
 * WooCommerce Version 4.3 tested
-* adds Mailchimp support form
+* adds Squalomail support form
 * moves navigation to WooCommerce nav as a sub-item
 * removes bubble h1 title element
 * log tab ui enhancements
@@ -42,7 +42,7 @@
 * fix cart posts with product variations
 = 2.4.2 =
 * WooCommerce Version 4.3 tested
-* adds Mailchimp support form
+* adds Squalomail support form
 * moves navigation to WooCommerce nav as a sub-item
 * removes bubble h1 title element
 * log tab ui enhancements 
@@ -59,7 +59,7 @@
 = 2.4.1 =
 * adds scrolling frame for logs
 * fix for Coupon Deletion via WooCommerce API
-* removes all non-Mailchimp notices
+* removes all non-Squalomail notices
 * update for latest version of Action Scheduler v3.1.4
 * documentation updates
 * fix for errors on activation following deactivation
@@ -67,7 +67,7 @@
 * adds error handling on store add/update 
 * use denormalized order items values in initial sync 
 * adds function allowing tags for specific users  
-* adds include/exclude Mailchimp script
+* adds include/exclude Squalomail script
 * fix for double opt-in issues on saved settings
 * fixes transactionals on guest checkout
 = 2.4.0 =
@@ -94,7 +94,7 @@
 = 2.3.2 =
 * update to action scheduler v3.0.1
 * adds low-bandwidth setting on sync
-* fixes audience defaults settings to Mailchimp not passed
+* fixes audience defaults settings to Squalomail not passed
 * tweaks to review banner behavior
 * required fields API update
 * fix for orders with deleted products
@@ -102,8 +102,8 @@
 = 2.3.1 =
 * adds fallback for mb_strpos if extension is not installed 
 * implements communications box on sync page
-* adds account create for Mailchimp 
-* fixes Pending Payment and On-hold status orders passed to Mailchimp
+* adds account create for Squalomail 
+* fixes Pending Payment and On-hold status orders passed to Squalomail
 * fixes for WooCommerce Fatal-errors
 * support for WooCommerce vendor feature
 * support for Shop Manager role by Woocommerce
@@ -120,12 +120,12 @@
 * documentation for wp-cli class queue-command
 = 2.2 =
 * plugin reskin 
-* support for oauth to Mailchimp  
+* support for oauth to Squalomail  
 * fixes sync issues with altered order IDs
 * fixes issues with trashed coupons 
 = 2.1.17 =
 * re add resync button to sync tab, after sync finishes
-* renamed 'merge_vars' to 'merge_fields' as per new Mailchimp naming convention
+* renamed 'merge_vars' to 'merge_fields' as per new Squalomail naming convention
 * fixes issues with cloudflare
 * honors woo currency settings 
 * fix for failing custom coupon type
@@ -140,12 +140,12 @@
 = 2.1.15 =
 * adds optional feedback survey on deactivate 
 * updates syncing engine to use REST API 
-* fixes edited orders syncing old and new products into Mailchimp 
+* fixes edited orders syncing old and new products into Squalomail 
 * adds support for remove_action 
 = 2.1.14 =
 * Adds support for filter on newsletter field 
 * fixes inactive log delete button 
-* fixes Mailchimp option page flow and displays list defaults tab
+* fixes Squalomail option page flow and displays list defaults tab
 * fixes resource not found error on logs
 * fixes API Key Request errors
 * fixes transactional to pending double opt in issue
@@ -153,12 +153,12 @@
 = 2.1.13 =
 * fixed spelling issues in plugin meta
 * changed submission sequence for products to use the PATCH endpoint when applicable
-* fallback on order submissions when products are not found in Mailchimp.
+* fallback on order submissions when products are not found in Squalomail.
 = 2.1.12 =
 * adds error handling for blocked admin-ajax.php files
 * adds support for custom merge variables
 * removes global variable overwrite of REMOTE_ADDR
-* fixes signup form not adding customers to Mailchimp
+* fixes signup form not adding customers to Squalomail
 * support for rate limiting
 * PHP 7.0 requirement messaging
 * support for WooCommerce 3.5.0
@@ -171,7 +171,7 @@
 * better validation for the view order url
 * Add Initial sync label on Sync Tab
 * Multisite Delete and deactivate improvements
-* Mailchimp Order Notification issues support for downloadable and virtual products
+* Squalomail Order Notification issues support for downloadable and virtual products
 * http worker lock improvement 
 * Add documentation about Multisite setup 
 * Add documentaiton for on-demand syncing
@@ -244,14 +244,14 @@
 * Support for manually uploaded WooCommerce
 * Fix for sync issues
 * Fix for guest orders sync issue
-* Remove Mailchimp debug logger
+* Remove Squalomail debug logger
 = 1.1.1 =
 * Support for site url changes
 * Fix for WP Version 4.4 compatibility issues
 = 1.1.0 =
 * Fix for persisting opt-in status
-* Pass order URLs to Mailchimp
-* Pass partial refund status to Mailchimp
+* Pass order URLs to Squalomail
+* Pass partial refund status to Squalomail
 = 1.0.9 =
 * billing and shipping address support for orders
 = 1.0.8 =
@@ -295,7 +295,7 @@
 * fix free order 0.00 issue
 * fix product variant naming issue
 = 0.1.15 =
-* adding special Mailchimp header to requests
+* adding special Squalomail header to requests
 = 0.1.14 =
 * removing jquery dependencies
 = 0.1.13 =

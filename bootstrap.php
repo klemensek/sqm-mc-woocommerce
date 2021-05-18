@@ -19,9 +19,9 @@ spl_autoload_register(function($class) {
         'MailChimp_WooCommerce_Activator' => 'includes/class-squalomail-woocommerce-activator.php',
         'MailChimp_WooCommerce' => 'includes/class-squalomail-woocommerce.php',
         'MailChimp_WooCommerce_Privacy' => 'includes/class-squalomail-woocommerce-privacy.php',
-        'Mailchimp_Woocommerce_Deactivation_Survey' => 'includes/class-squalomail-woocommerce-deactivation-survey.php',
+        'Squalomail_Woocommerce_Deactivation_Survey' => 'includes/class-squalomail-woocommerce-deactivation-survey.php',
         'MailChimp_WooCommerce_Rest_Api' => 'includes/class-squalomail-woocommerce-rest-api.php',
-        'Mailchimp_Wocoomerce_CLI' => 'includes/class-squalomail-woocommerce-cli.php',
+        'Squalomail_Wocoomerce_CLI' => 'includes/class-squalomail-woocommerce-cli.php',
         
         // includes/api/assets
         'MailChimp_WooCommerce_Address' => 'includes/api/assets/class-squalomail-address.php',
@@ -53,7 +53,7 @@ spl_autoload_register(function($class) {
         'MailChimp_WooCommerce_Transform_Products' => 'includes/api/class-squalomail-woocommerce-transform-products.php',
 
         // includes/processes
-        'Mailchimp_Woocommerce_Job' => 'includes/processes/class-squalomail-woocommerce-job.php',
+        'Squalomail_Woocommerce_Job' => 'includes/processes/class-squalomail-woocommerce-job.php',
         'MailChimp_WooCommerce_Abstract_Sync' => 'includes/processes/class-squalomail-woocommerce-abstract-sync.php',
         'MailChimp_WooCommerce_Cart_Update' => 'includes/processes/class-squalomail-woocommerce-cart-update.php',
         'MailChimp_WooCommerce_Process_Coupons' => 'includes/processes/class-squalomail-woocommerce-process-coupons.php',
@@ -98,12 +98,12 @@ function squalomail_environment_variables() {
 /**
  * Push a job onto the Action Scheduler queue.
  *
- * @param Mailchimp_Woocommerce_Job $job
+ * @param Squalomail_Woocommerce_Job $job
  * @param int $delay
  *
  * @return true
  */
-function squalomail_as_push( Mailchimp_Woocommerce_Job $job, $delay = 0 ) {			
+function squalomail_as_push( Squalomail_Woocommerce_Job $job, $delay = 0 ) {			
     global $wpdb;
     $current_page = isset($job->current_page) && $job->current_page >= 0 ? $job->current_page : false;
     $job_id = isset($job->id) ? $job->id : ($current_page ? $job->current_page : get_class($job));
@@ -181,11 +181,11 @@ function squalomail_as_push( Mailchimp_Woocommerce_Job $job, $delay = 0 ) {
 
 
 /**
- * @param Mailchimp_Woocommerce_Job $job
+ * @param Squalomail_Woocommerce_Job $job
  * @param int $delay
  * @param bool $force_now
  */
-function squalomail_handle_or_queue(Mailchimp_Woocommerce_Job $job, $delay = 0)
+function squalomail_handle_or_queue(Squalomail_Woocommerce_Job $job, $delay = 0)
 {   
     if ($job instanceof \MailChimp_WooCommerce_Single_Order && isset($job->id)) {
         // if this is a order process already queued - just skip this
@@ -278,7 +278,7 @@ function squalomail_get_store_id() {
     if (!empty($store_id)) {
         // see if we have a record of the last verification set for this job.
         $last_verification = squalomail_get_data('store-id-last-verified');
-        // if it's less than 300 seconds, we don't need to beat up on Mailchimp's API to do this so often.
+        // if it's less than 300 seconds, we don't need to beat up on Squalomail's API to do this so often.
         // just return the store ID that was in memory.
         if ((!empty($last_verification) && is_numeric($last_verification)) && ((time() - $last_verification) < 600)) {
             //squalomail_log('debug.performance', 'prevented store endpoint api call');
@@ -1322,6 +1322,6 @@ if (defined( 'WP_CLI' ) && WP_CLI) {
             }
         };
         WP_CLI::add_command( 'squalomail_push', 'squalomail_cli_push_command');
-        WP_CLI::add_command( 'queue', 'Mailchimp_Wocoomerce_CLI' );
+        WP_CLI::add_command( 'queue', 'Squalomail_Wocoomerce_CLI' );
     } catch (\Exception $e) {}
 }

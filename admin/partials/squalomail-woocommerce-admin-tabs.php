@@ -89,8 +89,8 @@ else {
 
                         <?php if ($active_tab == 'api_key' ) : ?>
                             <span class="sqm-woocommerce-header-steps">1 of 3 - Connect</span>
-                            <span class="sqm-woocommerce-header-title"> <?php wp_kses(_e('Add Mailchimp for WooCommerce', 'squalomail-for-woocommerce'), $allowed_html);?> </span>
-                            <span class="sqm-woocommerce-header-subtitle"> <?php wp_kses(_e('Build custom segments, send automations, and track purchase <br/>activity in Mailchimp. Login to authorize an account connection.', 'squalomail-for-woocommerce'), $allowed_html);?> </span>
+                            <span class="sqm-woocommerce-header-title"> <?php wp_kses(_e('Add Squalomail for WooCommerce', 'squalomail-for-woocommerce'), $allowed_html);?> </span>
+                            <span class="sqm-woocommerce-header-subtitle"> <?php wp_kses(_e('Build custom segments, send automations, and track purchase <br/>activity in Squalomail. Login to authorize an account connection.', 'squalomail-for-woocommerce'), $allowed_html);?> </span>
                         <?php endif;?>
                 
                         <?php if ($active_tab == 'store_info' && $has_valid_api_key) :?>
@@ -164,7 +164,7 @@ else {
                         );
                         
                         if ($active_tab == 'api_key' ) {
-                            wp_kses(_e('Add Mailchimp for WooCommerce to build custom segments, send automations, and track purchase activity in Mailchimp', 'squalomail-for-woocommerce'), $allowed_html);
+                            wp_kses(_e('Add Squalomail for WooCommerce to build custom segments, send automations, and track purchase activity in Squalomail', 'squalomail-for-woocommerce'), $allowed_html);
                         }
                 
                         if ($active_tab == 'store_info' && $has_valid_api_key) {
@@ -190,15 +190,15 @@ else {
                         }
                         if ($active_tab == 'sync' && $show_sync_tab) {
                             if (squalomail_is_done_syncing()) {
-                                wp_kses(_e('Success! You are connected to Mailchimp', 'squalomail-for-woocommerce'), $allowed_html);
+                                wp_kses(_e('Success! You are connected to Squalomail', 'squalomail-for-woocommerce'), $allowed_html);
                             }
                             else {
-                                wp_kses(_e('Your WooCommerce store is syncing to Mailchimp', 'squalomail-for-woocommerce'), $allowed_html);
+                                wp_kses(_e('Your WooCommerce store is syncing to Squalomail', 'squalomail-for-woocommerce'), $allowed_html);
                             }
                         }
                 
                         if ($active_tab == 'logs' && $show_sync_tab) {
-                            wp_kses(_e('Log events from the Mailchimp plugin', 'squalomail-for-woocommerce'), $allowed_html);
+                            wp_kses(_e('Log events from the Squalomail plugin', 'squalomail-for-woocommerce'), $allowed_html);
                         }
 
                         if ($active_tab == 'plugin_settings' && $show_sync_tab) {
@@ -237,13 +237,13 @@ else {
         <?php endif; ?>
                 <?php if (!defined('PHP_VERSION_ID') || (PHP_VERSION_ID < 70000)): ?>
                     <div data-dismissible="notice-php-version" class="error notice notice-error">
-                        <p><?php esc_html_e('Mailchimp says: Please upgrade your PHP version to a minimum of 7.0', 'squalomail-for-woocommerce'); ?></p>
+                        <p><?php esc_html_e('Squalomail says: Please upgrade your PHP version to a minimum of 7.0', 'squalomail-for-woocommerce'); ?></p>
                     </div>
                 <?php endif; ?>
 
                 <?php if (!empty($has_api_error)): ?>
                     <div data-dismissible="notice-api-error" class="error notice notice-error is-dismissible">
-                        <p><?php esc_html_e("Mailchimp says: API Request Error - ".$has_api_error, 'squalomail-for-woocommerce'); ?></p>
+                        <p><?php esc_html_e("Squalomail says: API Request Error - ".$has_api_error, 'squalomail-for-woocommerce'); ?></p>
                     </div>
                 <?php endif; ?>
                 <div class="box">

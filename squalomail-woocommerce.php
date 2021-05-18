@@ -13,11 +13,11 @@
  * @package           MailChimp_WooCommerce
  *
  * @wordpress-plugin
- * Plugin Name:       Mailchimp for WooCommerce
+ * Plugin Name:       Squalomail for WooCommerce
  * Plugin URI:        https://squalomail.com/connect-your-store/
- * Description:       Connects WooCommerce to Mailchimp to sync your store data, send targeted campaigns to your customers, and sell more stuff. 
+ * Description:       Connects WooCommerce to Squalomail to sync your store data, send targeted campaigns to your customers, and sell more stuff. 
  * Version:           2.5.1
- * Author:            Mailchimp
+ * Author:            Squalomail
  * Author URI:        https://squalomail.com
  * License:           GPL-2.0+
  * License URI:       http://www.gnu.org/licenses/gpl-2.0.txt
