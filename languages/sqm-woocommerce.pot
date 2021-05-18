@@ -230,7 +230,7 @@ msgid "We dectected that this site has the following constants defined, likely a
 msgstr ""
 
 #: admin/class-mailchimp-woocommerce-admin.php:437
-msgid "These constants are deprecated since Mailchimp for Woocommerce version 2.3. Please refer to the <a href=\"https://github.com/mailchimp/mc-woocommerce/wiki/\">plugin official wiki</a> for further details."
+msgid "These constants are deprecated since Mailchimp for Woocommerce version 2.3. Please refer to the <a href=\"https://github.com/mailchimp/sqm-woocommerce/wiki/\">plugin official wiki</a> for further details."
 msgstr ""
 
 #: admin/class-mailchimp-woocommerce-admin.php:647

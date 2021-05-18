@@ -54,7 +54,7 @@ $comm_enabled = $opt != null ? $opt : '0';
 		<p>
 			<?php wp_nonce_field( '_disconnect-nonce-'.$store_id, '_disconnect-nonce' ); ?>
 
-			<a id="mailchimp_woocommerce_disconnect" class="mc-woocommerce-disconnect-button button button-default tab-content-submit">
+			<a id="mailchimp_woocommerce_disconnect" class="sqm-woocommerce-disconnect-button button button-default tab-content-submit">
 				<?php esc_html_e('Disconnect Store', 'mailchimp-for-woocommerce');?>
 			</a>
 		</p>

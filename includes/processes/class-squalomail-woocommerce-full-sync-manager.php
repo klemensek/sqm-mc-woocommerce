@@ -154,7 +154,7 @@ if ( ! class_exists( 'MailChimp_WooCommerce_Process_Full_Sync_Manager' ) ) {
 				if (mailchimp_get_remaining_jobs_count('MailChimp_WooCommerce_Single_Order') <= 0 && mailchimp_get_remaining_jobs_count('MailChimp_WooCommerce_Process_Orders') <= 0) {
 					$this->flag_stop_sync();
                     try {
-                        as_unschedule_action('MailChimp_WooCommerce_Process_Full_Sync_Manager', array(), 'mc-woocommerce' );
+                        as_unschedule_action('MailChimp_WooCommerce_Process_Full_Sync_Manager', array(), 'sqm-woocommerce' );
                     } catch (\Exception $e) {}
 				}	
 			}
@@ -165,7 +165,7 @@ if ( ! class_exists( 'MailChimp_WooCommerce_Process_Full_Sync_Manager' ) ) {
 		 */
 		protected function recreate()
 		{
-			as_schedule_single_action(strtotime( '+10 seconds' ), 'MailChimp_WooCommerce_Process_Full_Sync_Manager', array(), 'mc-woocommerce' );	
+			as_schedule_single_action(strtotime( '+10 seconds' ), 'MailChimp_WooCommerce_Process_Full_Sync_Manager', array(), 'sqm-woocommerce' );	
 		}
 	}
 }

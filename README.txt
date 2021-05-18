@@ -46,7 +46,7 @@ You’ll need to do a few things to connect your WooCommerce store to Mailchimp.
 - Install the plugin on your WordPress Admin site.
 - Connect securely to your Mailchimp account via secure OAuth pop-up window.
 - Configure your Audience settings to complete the data sync process.
-- If you have more advanced configuration needs, please refer to our [GitHub wiki](https://github.com/mailchimp/mc-woocommerce/wiki)
+- If you have more advanced configuration needs, please refer to our [GitHub wiki](https://github.com/mailchimp/sqm-woocommerce/wiki)
 
 == Frequently Asked Questions ==
 
@@ -58,11 +58,11 @@ You’ll need to do a few things to connect your WooCommerce store to Mailchimp.
 
 = What is the recommended way to sync larger stores? =
 
-To optimize the performance of your Mailchimp integration we recommend running the queue in CLI mode. Please refer to [this guide](https://github.com/mailchimp/mc-woocommerce/wiki/Advanced-Queue-Setup-In-CLI-mode) in our Wiki.
+To optimize the performance of your Mailchimp integration we recommend running the queue in CLI mode. Please refer to [this guide](https://github.com/mailchimp/sqm-woocommerce/wiki/Advanced-Queue-Setup-In-CLI-mode) in our Wiki.
 
 = Are multisite configurations supported?
 
-Multisites are supported, with a few caveats. Please refer to our [Wiki page](https://github.com/mailchimp/mc-woocommerce/wiki/Multisite-Setups) on this topic for more information.
+Multisites are supported, with a few caveats. Please refer to our [Wiki page](https://github.com/mailchimp/sqm-woocommerce/wiki/Multisite-Setups) on this topic for more information.
 
 = Why aren't product categories being sent to Mailchimp? =
 At this time, the synchronization of product categories from WooCommerce to Mailchimp is not supported by the Mailchimp API.
@@ -74,12 +74,12 @@ At this time, the synchronization of product categories from WooCommerce to Mail
 - If you have a large number of plugins being used, you may need to bump up your memory limit on your server (1GB for example) to accommodate the initial sync.
 
 = My question is not listed =
-If you are unable to sync or connect with Mailchimp, you can open a ticket on our [Github plugin page](https://github.com/mailchimp/mc-woocommerce/issues). Please provide the version of the plugin and PHP you're using, any fatal errors in the WooCommerce logs (WooCommerce -> Status -> Logs) you're seeing, along with relevant information to the problem you're experiencing.
+If you are unable to sync or connect with Mailchimp, you can open a ticket on our [Github plugin page](https://github.com/mailchimp/sqm-woocommerce/issues). Please provide the version of the plugin and PHP you're using, any fatal errors in the WooCommerce logs (WooCommerce -> Status -> Logs) you're seeing, along with relevant information to the problem you're experiencing.
 
 == Changelog ==
 = 2.5 =
 * interface reskin
 * fix for fatal error on disabled WoooCommerce admin
 
-[Historical Changelog](https://raw.githubusercontent.com/mailchimp/mc-woocommerce/master/CHANGELOG.txt)
+[Historical Changelog](https://raw.githubusercontent.com/mailchimp/sqm-woocommerce/master/CHANGELOG.txt)
 

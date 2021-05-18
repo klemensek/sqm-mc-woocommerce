@@ -389,7 +389,7 @@ class MailChimp_WooCommerce_Admin extends MailChimp_WooCommerce_Options {
 			$text = __('Mailchimp for Woocommerce','mailchimp-for-woocommerce').'<br/>'.
 			'<p id="http-worker-deprecated-message">'.__('We dectected that this site has the following constants defined, likely at wp-config.php file' ,'mailchimp-for-woocommerce').': '.
 			implode(' | ', $constants_used).'<br/>'.
-			__('These constants are deprecated since Mailchimp for Woocommerce version 2.3. Please refer to the <a href="https://github.com/mailchimp/mc-woocommerce/wiki/">plugin official wiki</a> for further details.' ,'mailchimp-for-woocommerce').'</p>';
+			__('These constants are deprecated since Mailchimp for Woocommerce version 2.3. Please refer to the <a href="https://github.com/mailchimp/sqm-woocommerce/wiki/">plugin official wiki</a> for further details.' ,'mailchimp-for-woocommerce').'</p>';
 			
 			// only print notice for deprecated constants, on mailchimp woocoomerce pages
 			if ($pagenow == 'admin.php' && 'mailchimp-woocommerce' === $_GET['page']) {
@@ -1666,7 +1666,7 @@ class MailChimp_WooCommerce_Admin extends MailChimp_WooCommerce_Options {
 		$full_sync->start_sync();
 		
         // enqueue sync manager
-		as_enqueue_async_action( 'MailChimp_WooCommerce_Process_Full_Sync_Manager', array(), 'mc-woocommerce' );
+		as_enqueue_async_action( 'MailChimp_WooCommerce_Process_Full_Sync_Manager', array(), 'sqm-woocommerce' );
 	}
 
 	/**

@@ -34,5 +34,5 @@ If applicable, add screenshots to help explain your problem.
 - Are there any fatal errors in WooCommerce? (WooCommerce -> Status -> Logs)
 - If you're using the current version of the plugin, it utilizes a queue powered by [Action Scheduler](https://actionscheduler.org/). It depends on `WP_CRON` to be activated with your hosting provider. Please confirm that it's enabled.
 - If you're using a host that makes use of CPU throttling, check to see if you've hit your limit after initiating the sync.
-- Do you have any caching plugins or services running? If you're using Redis, Nginx, or MemCache, see if you or your hosting provider can exclude certain paths to the `REST API` and `/wp-json/mailchimp-for-woocommerce`. Visit our Wiki help page on [this topic](https://github.com/mailchimp/mc-woocommerce/wiki/Using-Caches) for more information.
+- Do you have any caching plugins or services running? If you're using Redis, Nginx, or MemCache, see if you or your hosting provider can exclude certain paths to the `REST API` and `/wp-json/mailchimp-for-woocommerce`. Visit our Wiki help page on [this topic](https://github.com/mailchimp/sqm-woocommerce/wiki/Using-Caches) for more information.
 - If you have a large number of plugins being used, you may need to bump up your memory limit on your server (1GB for example) to accommodate the initial sync.
