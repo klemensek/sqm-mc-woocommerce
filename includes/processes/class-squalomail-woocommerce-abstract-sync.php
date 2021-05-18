@@ -18,7 +18,7 @@ abstract class MailChimp_WooCommerce_Abstract_Sync extends Mailchimp_Woocommerce
     /**
      * @var MailChimp_WooCommerce_MailChimpApi
      */
-    private $mc;
+    private $sqm;
 
     /**
      * @var string
@@ -382,10 +382,10 @@ abstract class MailChimp_WooCommerce_Abstract_Sync extends Mailchimp_Woocommerce
      */
     protected function mailchimp()
     {
-        if (empty($this->mc)) {
-            $this->mc = new MailChimp_WooCommerce_MailChimpApi($this->getOption('mailchimp_api_key'));
+        if (empty($this->sqm)) {
+            $this->sqm = new MailChimp_WooCommerce_MailChimpApi($this->getOption('mailchimp_api_key'));
         }
-        return $this->mc;
+        return $this->sqm;
     }
 
     /**

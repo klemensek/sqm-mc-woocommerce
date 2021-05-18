@@ -215,7 +215,7 @@ a.button.back-step {
 	margin-bottom: 20px !important;
 }
 
-.mc-review-button {
+.sqm-review-button {
 	border: 1px solid #DBD9D2 !important;
 	color: #0073AA !important;
 }
@@ -505,7 +505,7 @@ a.button.create-account {
 	height: 264px;
 }
 
-.mc-comm-save {
+.sqm-comm-save {
 	position: absolute;
 	display: none;
 	font-size: 0.8em;

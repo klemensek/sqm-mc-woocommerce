@@ -33,7 +33,7 @@ function mailchimpHandleBillingEmail(selector) {
         var b = void 0 !== a ? a.value : "";
         if (!mailchimp_cart.valueEmail(b) || mailchimp_submitted_email === b) { return false; }
         mailchimp_cart.setEmail(b);
-        var c = mailchimp_public_data.ajax_url + "?action=mailchimp_set_user_by_email&email=" + b + "&mc_language=" + mailchimp_public_data.language;
+        var c = mailchimp_public_data.ajax_url + "?action=mailchimp_set_user_by_email&email=" + b + "&sqm_language=" + mailchimp_public_data.language;
         var d = new XMLHttpRequest;
         d.open("POST", c, !0);
         d.onload = function () {
@@ -180,7 +180,7 @@ mailchimpReady(function () {
 
     try {
         var b = mailchimp.utils.getQueryStringVars();
-        void 0 !== b.mc_cart_id && mailchimpGetCurrentUserByHash(b.mc_cart_id);
+        void 0 !== b.sqm_cart_id && mailchimpGetCurrentUserByHash(b.sqm_cart_id);
 
         mailchimp_username_email = document.querySelector("#username");
         mailchimp_billing_email = document.querySelector("#billing_email");

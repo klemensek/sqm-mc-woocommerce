@@ -27,12 +27,12 @@ $comm_enabled = $opt != null ? $opt : '0';
 		</label>
 		<br/>
 		<fieldset>    
-			<p id="mc-comm-wrapper">
+			<p id="sqm-comm-wrapper">
 				<label class="el-switch el-checkbox-green">
 					<input id="comm_box_switch" type="checkbox" name="switch" <?php if($comm_enabled === '1') echo ' checked="checked" '; ?> value="1">
 					<span><?= __('Opt-in to our newsletter', 'mailchimp-for-woocommerce'); ?></span>
 					<br/>
-					<span class="mc-comm-save" id="mc-comm-save">Saved</span>
+					<span class="sqm-comm-save" id="sqm-comm-save">Saved</span>
 				</label>
 				
 			</p>

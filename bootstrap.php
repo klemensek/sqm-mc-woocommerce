@@ -291,16 +291,16 @@ function mailchimp_get_store_id() {
         //mailchimp_log('debug.performance', 'get_store_id - calling STORE endpoint.');
         // let's retrieve the store for this domain, through the API
         $store = $api->getStore($store_id, false);
-        // if there's no store, try to fetch from mc a store related to the current domain
+        // if there's no store, try to fetch from sqm a store related to the current domain
         if (!$store) {
             //mailchimp_log('debug.performance', 'get_store_id - no store found - calling STORES endpoint to update site id.');
             $stores = $api->stores();
             if (!empty($stores)) {
                 //iterate thru stores, find correct store ID and save it to db
-                foreach ($stores as $mc_store) {
-                    if ($mc_store->getDomain() === get_option('siteurl')) {
-                        update_option('mailchimp-woocommerce-store_id', $mc_store->getId(), 'yes');
-                        $store_id = $mc_store->getId();
+                foreach ($stores as $sqm_store) {
+                    if ($sqm_store->getDomain() === get_option('siteurl')) {
+                        update_option('mailchimp-woocommerce-store_id', $sqm_store->getId(), 'yes');
+                        $store_id = $sqm_store->getId();
                     }
                 }
             }
