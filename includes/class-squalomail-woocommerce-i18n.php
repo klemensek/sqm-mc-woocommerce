@@ -6,7 +6,7 @@
  * Loads and defines the internationalization files for this plugin
  * so that it is ready for translation.
  *
- * @link       https://mailchimp.com
+ * @link       https://squalomail.com
  * @since      1.0.1
  *
  * @package    MailChimp_WooCommerce
@@ -35,7 +35,7 @@ class MailChimp_WooCommerce_i18n {
 	public function load_plugin_textdomain() {
 
 		load_plugin_textdomain(
-			'mailchimp-for-woocommerce',
+			'squalomail-for-woocommerce',
 			false,
 			dirname( dirname( plugin_basename( __FILE__ ) ) ) . '/languages/'
 		);

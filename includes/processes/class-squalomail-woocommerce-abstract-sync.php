@@ -23,7 +23,7 @@ abstract class MailChimp_WooCommerce_Abstract_Sync extends Mailchimp_Woocommerce
     /**
      * @var string
      */
-    private $plugin_name = 'mailchimp-woocommerce';
+    private $plugin_name = 'squalomail-woocommerce';
 
     /**
      * @var string
@@ -66,16 +66,16 @@ abstract class MailChimp_WooCommerce_Abstract_Sync extends Mailchimp_Woocommerce
     {
         switch ($this->getResourceType()) {
             case 'coupons':
-                $post_count = mailchimp_get_coupons_count();
+                $post_count = squalomail_get_coupons_count();
                break;
             case 'products':
-                $post_count = mailchimp_get_product_count();
+                $post_count = squalomail_get_product_count();
                break;
             case 'orders':
-                $post_count = mailchimp_get_order_count();
+                $post_count = squalomail_get_order_count();
                break;
            default:
-                mailchimp_log('sync.error', $this->getResourceType().' is not a valid resource.');
+                squalomail_log('sync.error', $this->getResourceType().' is not a valid resource.');
                break;
         }
         
@@ -85,7 +85,7 @@ abstract class MailChimp_WooCommerce_Abstract_Sync extends Mailchimp_Woocommerce
 
         while ($page - 1 <= ceil((int)$post_count / $this->items_per_page)) {
             $next = new static($page);
-            mailchimp_handle_or_queue($next);
+            squalomail_handle_or_queue($next);
             $this->setResourcePagePointer(($page), $this->getResourceType());
             $page++;
         }
@@ -112,7 +112,7 @@ abstract class MailChimp_WooCommerce_Abstract_Sync extends Mailchimp_Woocommerce
      */
     public function getStoreID()
     {
-        return mailchimp_get_store_id();
+        return squalomail_get_store_id();
     }
 
     /**
@@ -129,13 +129,13 @@ abstract class MailChimp_WooCommerce_Abstract_Sync extends Mailchimp_Woocommerce
      */
     public function handle()
     {
-        if (!mailchimp_is_configured()) {
-            mailchimp_debug(get_called_class(), 'Mailchimp is not configured properly');
+        if (!squalomail_is_configured()) {
+            squalomail_debug(get_called_class(), 'Mailchimp is not configured properly');
             return false;
         }
 
         if (!($this->store_id = $this->getStoreID())) {
-            mailchimp_debug(get_called_class().'@handle', 'store id not loaded');
+            squalomail_debug(get_called_class().'@handle', 'store id not loaded');
             return false;
         }
 
@@ -146,7 +146,7 @@ abstract class MailChimp_WooCommerce_Abstract_Sync extends Mailchimp_Woocommerce
             // check this again
             if ($this->isBeingRateLimited()) {
                 // ok - hold off for a few - let's re-queue the job.
-                mailchimp_debug(get_called_class().'@handle', 'being rate limited - pausing for a few seconds...');
+                squalomail_debug(get_called_class().'@handle', 'being rate limited - pausing for a few seconds...');
                 $this->retry();
                 return false;
             }
@@ -155,7 +155,7 @@ abstract class MailChimp_WooCommerce_Abstract_Sync extends Mailchimp_Woocommerce
         $page = $this->getResources();
         
         if (empty($page)) {
-            mailchimp_debug(get_called_class().'@handle', 'could not find any more '.$this->getResourceType().' records ending on page '.$this->getResourcePagePointer());
+            squalomail_debug(get_called_class().'@handle', 'could not find any more '.$this->getResourceType().' records ending on page '.$this->getResourcePagePointer());
             // call the completed event to process further
             $this->resourceComplete($this->getResourceType());
             $this->complete();
@@ -167,7 +167,7 @@ abstract class MailChimp_WooCommerce_Abstract_Sync extends Mailchimp_Woocommerce
         // if we've got a 0 count, that means we're done.
         if ($page->count <= 0) {
 
-            mailchimp_debug(get_called_class().'@handle', $this->getResourceType().' :: completing now!');
+            squalomail_debug(get_called_class().'@handle', $this->getResourceType().' :: completing now!');
 
             // reset the resource page back to 1
             $this->resourceComplete($this->getResourceType());
@@ -182,18 +182,18 @@ abstract class MailChimp_WooCommerce_Abstract_Sync extends Mailchimp_Woocommerce
         foreach ($page->items as $resource) {
            switch ($this->getResourceType()) {
                 case 'coupons':
-                    mailchimp_handle_or_queue(new MailChimp_WooCommerce_SingleCoupon($resource));
+                    squalomail_handle_or_queue(new MailChimp_WooCommerce_SingleCoupon($resource));
                    break;
                 case 'products':
-                    mailchimp_handle_or_queue(new MailChimp_WooCommerce_Single_Product($resource));
+                    squalomail_handle_or_queue(new MailChimp_WooCommerce_Single_Product($resource));
                    break;
                 case 'orders':
                     $order = new MailChimp_WooCommerce_Single_Order($resource);
                     $order->set_full_sync(true);
-                    mailchimp_handle_or_queue($order);
+                    squalomail_handle_or_queue($order);
                    break;
                default:
-                    mailchimp_log('sync.error', $this->getResourceType().' is not a valid resource.');
+                    squalomail_log('sync.error', $this->getResourceType().' is not a valid resource.');
                    break;
            }
         }
@@ -380,10 +380,10 @@ abstract class MailChimp_WooCommerce_Abstract_Sync extends Mailchimp_Woocommerce
     /**
      * @return MailChimp_WooCommerce_MailChimpApi
      */
-    protected function mailchimp()
+    protected function squalomail()
     {
         if (empty($this->sqm)) {
-            $this->sqm = new MailChimp_WooCommerce_MailChimpApi($this->getOption('mailchimp_api_key'));
+            $this->sqm = new MailChimp_WooCommerce_MailChimpApi($this->getOption('squalomail_api_key'));
         }
         return $this->sqm;
     }
@@ -393,6 +393,6 @@ abstract class MailChimp_WooCommerce_Abstract_Sync extends Mailchimp_Woocommerce
      */
     protected function isBeingRateLimited()
     {
-        return (bool) mailchimp_get_transient('api-rate-limited', false);
+        return (bool) squalomail_get_transient('api-rate-limited', false);
     }
 }

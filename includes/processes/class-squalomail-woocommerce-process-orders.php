@@ -13,7 +13,7 @@ class MailChimp_WooCommerce_Process_Orders extends MailChimp_WooCommerce_Abstrac
     /**
      * @var string
      */
-    protected $action = 'mailchimp_woocommerce_process_orders';
+    protected $action = 'squalomail_woocommerce_process_orders';
     public $items = array();
 
     /**
@@ -29,7 +29,7 @@ class MailChimp_WooCommerce_Process_Orders extends MailChimp_WooCommerce_Abstrac
      */
     protected function complete()
     {
-        mailchimp_log('order_sync.completed', 'Done with the order queueing.');
+        squalomail_log('order_sync.completed', 'Done with the order queueing.');
 
         // add a timestamp for the orders sync completion
         $this->setResourceCompleteTime();

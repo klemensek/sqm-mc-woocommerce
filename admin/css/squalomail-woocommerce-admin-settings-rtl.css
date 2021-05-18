@@ -38,7 +38,7 @@ html {
 	padding-bottom: 69px;
 }
 
-.sqm-woocommerce-settings-header .mailchimp-logo {
+.sqm-woocommerce-settings-header .squalomail-logo {
 	margin: 0 1em;
 }
 
@@ -337,7 +337,7 @@ a.button.create-account {
 	position: absolute;
 }
 
-#mailchimp-oauth-connected {
+#squalomail-oauth-connected {
 	color: #7FAD45;
 }
 
@@ -653,8 +653,8 @@ a.button.create-account {
 	line-height: 20px;
 }
 
-.sync-content-wrapper .sync-controls #mailchimp_account_connected,
-.sync-content-wrapper .sync-controls #mailchimp_list_name {
+.sync-content-wrapper .sync-controls #squalomail_account_connected,
+.sync-content-wrapper .sync-controls #squalomail_list_name {
 	font-size: 20px;
 	line-height: 28px;
 }
@@ -815,7 +815,7 @@ a.button.create-account {
 	
 }
 
-.tab-content-wrapper .mailchimp-select-wrapper {
+.tab-content-wrapper .squalomail-select-wrapper {
 	border: 1px solid #DBD9D2;
 	padding: 6px 6px 4px 20px;
 	-webkit-border-radius: 4px;
@@ -825,7 +825,7 @@ a.button.create-account {
 	background-color: white;
 }
 
-.tab-content-wrapper .mailchimp-select-wrapper select {
+.tab-content-wrapper .squalomail-select-wrapper select {
 	padding: 3px 24px 3px 0px;
 	font-size: 14px;
 	font-family: "Proxima Nova Alt Light", Arial, Helvetica, sans-serif;
@@ -838,11 +838,11 @@ a.button.create-account {
 	color: #32373c;
 }
 
-.tab-content-wrapper .mailchimp-select-wrapper select option{
+.tab-content-wrapper .squalomail-select-wrapper select option{
 	outline: none;
 }
 
-.tab-content-wrapper .mailchimp-select-wrapper select:disabled {
+.tab-content-wrapper .squalomail-select-wrapper select:disabled {
 	color: #aaa;
 	background: none;
 }
@@ -1206,7 +1206,7 @@ a.button.create-account {
 		padding: 1em;
 	}
 
-	.tab-content-wrapper .mailchimp-select-wrapper select {
+	.tab-content-wrapper .squalomail-select-wrapper select {
 	
 		font-size: 16px;
 		line-height: 32px;

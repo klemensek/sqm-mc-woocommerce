@@ -9,8 +9,8 @@ class MailChimp_WooCommerce_Privacy
     {
         if (function_exists( 'wp_add_privacy_policy_content')) {
             $content = sprintf(/* translators: %s - Mailchimp Privacy Policy URL. */
-                __( 'When shopping, we keep a record of your email and the cart contents for up to 30 days on our server. This record is kept to repopulate the contents of your cart if you switch devices or needed to come back another day. Read our privacy policy <a href="%s">here</a>.', 'mailchimp-for-woocommerce' ),
-                'https://mailchimp.com/legal/privacy/'
+                __( 'When shopping, we keep a record of your email and the cart contents for up to 30 days on our server. This record is kept to repopulate the contents of your cart if you switch devices or needed to come back another day. Read our privacy policy <a href="%s">here</a>.', 'squalomail-for-woocommerce' ),
+                'https://squalomail.com/legal/privacy/'
                 
             );
             wp_add_privacy_policy_content('MailChimp for WooCommerce', wp_kses_post(wpautop($content, false)));
@@ -23,7 +23,7 @@ class MailChimp_WooCommerce_Privacy
      */
     public function register_exporter($exporters)
     {
-        $exporters['mailchimp-woocommerce'] = array(
+        $exporters['squalomail-woocommerce'] = array(
             'exporter_friendly_name' => __('MailChimp for WooCommerce'),
             'callback'               => array($this, 'export'),
         );
@@ -36,7 +36,7 @@ class MailChimp_WooCommerce_Privacy
      */
     public function register_eraser($erasers)
     {
-        $erasers['mailchimp-woocommerce'] = array(
+        $erasers['squalomail-woocommerce'] = array(
             'eraser_friendly_name' => __('MailChimp for WooCommerce'),
             'callback'               => array($this, 'erase'),
         );
@@ -52,12 +52,12 @@ class MailChimp_WooCommerce_Privacy
     {
         global $wpdb;
 
-        $uid = mailchimp_hash_trim_lower($email_address);
+        $uid = squalomail_hash_trim_lower($email_address);
 
         $data = array();
 
-        if (get_site_option('mailchimp_woocommerce_db_mailchimp_carts', false)) {
-            $table = "{$wpdb->prefix}mailchimp_carts";
+        if (get_site_option('squalomail_woocommerce_db_squalomail_carts', false)) {
+            $table = "{$wpdb->prefix}squalomail_carts";
             $statement = "SELECT * FROM $table WHERE id = %s";
             $sql = $wpdb->prepare($statement, $uid);
 
@@ -74,12 +74,12 @@ class MailChimp_WooCommerce_Privacy
         return array(
             'data' => array(
                 array(
-                    'group_id'    => 'mailchimp_cart',
-                    'group_label' => __( 'MailChimp Shopping Cart Data', 'mailchimp-for-woocommerce' ),
+                    'group_id'    => 'squalomail_cart',
+                    'group_label' => __( 'MailChimp Shopping Cart Data', 'squalomail-for-woocommerce' ),
                     'item_id'     => 'mailing-shopping-cart-1',
                     'data'        => array(
                         array(
-                            'name'  => __( 'User ID', 'mailchimp-for-woocommerce' ),
+                            'name'  => __( 'User ID', 'squalomail-for-woocommerce' ),
                             'value' => $uid,
                         ),
                         $data, // this is already an associative array with name and value keys
@@ -94,11 +94,11 @@ class MailChimp_WooCommerce_Privacy
     {
         global $wpdb;
 
-        $uid = mailchimp_hash_trim_lower($email_address);
+        $uid = squalomail_hash_trim_lower($email_address);
         $count = 0;
 
-        if (get_site_option('mailchimp_woocommerce_db_mailchimp_carts', false)) {
-            $table = "{$wpdb->prefix}mailchimp_carts";
+        if (get_site_option('squalomail_woocommerce_db_squalomail_carts', false)) {
+            $table = "{$wpdb->prefix}squalomail_carts";
             $sql = $wpdb->prepare("DELETE FROM $table WHERE id = %s", $uid);
             $count = $wpdb->query($sql);
         }

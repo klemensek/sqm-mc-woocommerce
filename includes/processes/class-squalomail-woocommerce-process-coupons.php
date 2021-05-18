@@ -13,7 +13,7 @@ class MailChimp_WooCommerce_Process_Coupons extends MailChimp_WooCommerce_Abstra
     /**
      * @var string
      */
-    protected $action = 'mailchimp_woocommerce_process_coupons';
+    protected $action = 'squalomail_woocommerce_process_coupons';
 
     /**
      * @return string
@@ -28,7 +28,7 @@ class MailChimp_WooCommerce_Process_Coupons extends MailChimp_WooCommerce_Abstra
      */
     protected function complete()
     {
-        mailchimp_log('coupon_sync.completed', 'Done with the coupon queueing.');
+        squalomail_log('coupon_sync.completed', 'Done with the coupon queueing.');
 
         // add a timestamp for the orders sync completion
         $this->setResourceCompleteTime();

@@ -47,7 +47,7 @@ html {
 	display:table;
 }
 
-.sqm-woocommerce-settings-header .mailchimp-logo {
+.sqm-woocommerce-settings-header .squalomail-logo {
 	margin: 0 1em;
 }
 
@@ -340,7 +340,7 @@ a.button.create-account {
 	position: absolute;
 }
 
-#mailchimp-oauth-connected {
+#squalomail-oauth-connected {
 	color: #7FAD45;
 }
 
@@ -657,8 +657,8 @@ a.button.create-account {
 	line-height: 20px;
 }
 
-.sync-content-wrapper .sync-controls #mailchimp_account_connected,
-.sync-content-wrapper .sync-controls #mailchimp_list_name {
+.sync-content-wrapper .sync-controls #squalomail_account_connected,
+.sync-content-wrapper .sync-controls #squalomail_list_name {
 	font-size: 20px;
 	line-height: 28px;
 }
@@ -821,7 +821,7 @@ a.button.create-account {
 	
 }
 
-.tab-content-wrapper .mailchimp-select-wrapper {
+.tab-content-wrapper .squalomail-select-wrapper {
 	border: 1px solid #DBD9D2;
 	padding: 6px 6px 4px 20px;
 	-webkit-border-radius: 4px;
@@ -831,7 +831,7 @@ a.button.create-account {
 	background-color: white;
 }
 
-.tab-content-wrapper .mailchimp-select-wrapper select {
+.tab-content-wrapper .squalomail-select-wrapper select {
 	padding: 0;
 	background: transparent;
 	font-size: 14px;
@@ -844,11 +844,11 @@ a.button.create-account {
 	background: no-repeat right center url("data:image/svg+xml;charset=UTF-8,%3csvg width='13' height='8' viewBox='0 0 13 8' fill='none' xmlns='http://www.w3.org/2000/svg'%3e%3cpath d='M11.34 0.590027L6.75 5.17003L2.16 0.590027L0.75 2.00003L6.75 8.00003L12.75 2.00003L11.34 0.590027Z' fill='%23212121'/%3e%3c/svg%3e ");
 }
 
-.tab-content-wrapper .mailchimp-select-wrapper select option{
+.tab-content-wrapper .squalomail-select-wrapper select option{
 	outline: none;
 }
 
-.tab-content-wrapper .mailchimp-select-wrapper select:disabled {
+.tab-content-wrapper .squalomail-select-wrapper select:disabled {
 	color: #aaa;
 	background: none;
 }
@@ -857,14 +857,14 @@ a.button.create-account {
 	outline: none;
 }
 
-.tab-content-wrapper fieldset input[type='checkbox']:not(#mailchimp_woocommerce_newsletter) {
+.tab-content-wrapper fieldset input[type='checkbox']:not(#squalomail_woocommerce_newsletter) {
 	width: 2em;
 	height: 2em;
 	border-radius: 4px;
 	border: 1px solid #DBD9D2;
 }
 
-.tab-content-wrapper fieldset input[type='checkbox']:not(#mailchimp_woocommerce_newsletter):checked::before {
+.tab-content-wrapper fieldset input[type='checkbox']:not(#squalomail_woocommerce_newsletter):checked::before {
 	color: #7FAD45;
 	margin: -3px 0px 0px 5px;
 	content: url("data:image/svg+xml;charset=UTF-8,%3csvg width='13' height='9' viewBox='0 0 13 9' fill='none' xmlns='http://www.w3.org/2000/svg'%3e%3cpath d='M10.75 0.5L12.25 2L5.26 9L0.75 4.5L2.25 3L5.26 6L10.75 0.5Z' fill='%237FAD45'/%3e%3c/svg%3e ");
@@ -1199,11 +1199,11 @@ a.button.create-account {
 	background: rgb(255,255,255);
 }
 
-.settings-sample-frame .mailchimp-newsletter{ 
+.settings-sample-frame .squalomail-newsletter{ 
 	margin-top: 1em;
 }
 
-.settings-sample-frame .mailchimp-newsletter label{ 
+.settings-sample-frame .squalomail-newsletter label{ 
 	display: inline;
 }
 
@@ -1238,7 +1238,7 @@ a.button.create-account {
 		padding: 1em;
 	}
 
-	.tab-content-wrapper .mailchimp-select-wrapper select {
+	.tab-content-wrapper .squalomail-select-wrapper select {
 	
 		font-size: 16px;
 		line-height: 32px;

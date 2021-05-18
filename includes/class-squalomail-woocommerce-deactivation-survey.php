@@ -48,7 +48,7 @@ if ( ! class_exists( 'Mailchimp_Woocommerce_Deactivation_Survey', false ) ) {
 
 			$this->name   = $name;
 			$this->plugin = $plugin;
-			$this->endpoint = get_rest_url(null, 'mailchimp-for-woocommerce/v1/survey/disconnect');
+			$this->endpoint = get_rest_url(null, 'squalomail-for-woocommerce/v1/survey/disconnect');
 
 			// Don't run deactivation survey on dev sites.
 			if ( $this->is_dev_url() ) {
@@ -144,7 +144,7 @@ if ( ! class_exists( 'Mailchimp_Woocommerce_Deactivation_Survey', false ) ) {
 			<script type="text/javascript">
 			jQuery(function($){
 				var $deactivateLink = $('#the-list').find('[data-slug="<?php echo $this->plugin; ?>"] span.deactivate a'),
-					$overlay        = $('#mailchimp-woocommerce-deactivate-survey-<?php echo $this->plugin; ?>'),
+					$overlay        = $('#squalomail-woocommerce-deactivate-survey-<?php echo $this->plugin; ?>'),
 					$form           = $overlay.find('form'),
 					formOpen        = false;
 				// Plugin listing table deactivate link.
@@ -152,22 +152,22 @@ if ( ! class_exists( 'Mailchimp_Woocommerce_Deactivation_Survey', false ) ) {
 					event.preventDefault();
 					$overlay.css('display', 'table');
 					formOpen = true;
-					$form.find('.mailchimp-woocommerce-deactivate-survey-option:first-of-type input[type=radio]').focus();
+					$form.find('.squalomail-woocommerce-deactivate-survey-option:first-of-type input[type=radio]').focus();
 				});
 				// Survey radio option selected.
 				$form.on('change', 'input[type=radio]', function(event) {
 					event.preventDefault();
 					$form.find('input[type=text], .error').hide();
-					$form.find('.mailchimp-woocommerce-deactivate-survey-option').removeClass('selected');
-					$(this).closest('.mailchimp-woocommerce-deactivate-survey-option').addClass('selected').find('input[type=text]').show();
+					$form.find('.squalomail-woocommerce-deactivate-survey-option').removeClass('selected');
+					$(this).closest('.squalomail-woocommerce-deactivate-survey-option').addClass('selected').find('input[type=text]').show();
 				});
 				// Survey Skip & Deactivate.
-				$form.on('click', '.mailchimp-woocommerce-deactivate-survey-deactivate', function(event) {
+				$form.on('click', '.squalomail-woocommerce-deactivate-survey-deactivate', function(event) {
 					event.preventDefault();
 					location.href = $deactivateLink.attr('href');
 				});
 				// close button
-				$form.on('click', '.mailchimp-woocommerce-deactivate-survey-close', function(event) {
+				$form.on('click', '.squalomail-woocommerce-deactivate-survey-close', function(event) {
 					event.preventDefault();
 					$overlay.css('display', 'none');
 					formOpen = false;
@@ -176,20 +176,20 @@ if ( ! class_exists( 'Mailchimp_Woocommerce_Deactivation_Survey', false ) ) {
 				$form.submit(function(event) {
 					event.preventDefault();
 					if (! $form.find('input[type=radio]:checked').val()) {
-						$form.find('.mailchimp-woocommerce-deactivate-survey-footer').prepend('<span class="error"><?php echo esc_js( __( 'Please select an option', 'mailchimp-for-woocommerce' ) ); ?></span>');
+						$form.find('.squalomail-woocommerce-deactivate-survey-footer').prepend('<span class="error"><?php echo esc_js( __( 'Please select an option', 'squalomail-for-woocommerce' ) ); ?></span>');
 						return;
 					}
-					$form.find('.mailchimp-woocommerce-deactivate-survey-submit').html('<?php echo esc_js( __( 'Sending Feedback', 'mailchimp-for-woocommerce' ) ); ?>').attr("disabled", true).removeClass('button-primary');
+					$form.find('.squalomail-woocommerce-deactivate-survey-submit').html('<?php echo esc_js( __( 'Sending Feedback', 'squalomail-for-woocommerce' ) ); ?>').attr("disabled", true).removeClass('button-primary');
 					var submitSurvey = $.ajax(
 						{
 							url: "<?php echo $this->endpoint; ?>",
 							type: "POST",
 							data: {
-								id: '<?php echo mailchimp_get_store_id()?>',
+								id: '<?php echo squalomail_get_store_id()?>',
 								url: '<?php echo esc_url( home_url() ); ?>',
 								data: {
 									code: $form.find('.selected input[type=radio]').val(),
-									reason: $form.find('.selected .mailchimp-woocommerce-deactivate-survey-option-reason').val(),
+									reason: $form.find('.selected .squalomail-woocommerce-deactivate-survey-option-reason').val(),
 									details: $form.find('.selected input[type=text]').val(),
 									plugin: '<?php echo sanitize_key( $this->name ); ?>'
 								}
@@ -228,7 +228,7 @@ if ( ! class_exists( 'Mailchimp_Woocommerce_Deactivation_Survey', false ) ) {
 			}
 			?>
 			<style type="text/css">
-			.mailchimp-woocommerce-deactivate-survey-modal {
+			.squalomail-woocommerce-deactivate-survey-modal {
 				display: none;
 				table-layout: fixed;
 				position: fixed;
@@ -241,23 +241,23 @@ if ( ! class_exists( 'Mailchimp_Woocommerce_Deactivation_Survey', false ) ) {
 				left: 0;
 				background: rgba(0,0,0,0.8);
 			}
-			.mailchimp-woocommerce-deactivate-survey-wrap {
+			.squalomail-woocommerce-deactivate-survey-wrap {
 				display: table-cell;
 				vertical-align: middle;
 			}
-			.mailchimp-woocommerce-deactivate-survey {
+			.squalomail-woocommerce-deactivate-survey {
 				background-color: #fff;
 				max-width: 550px;
 				margin: 0 auto;
 				padding: 30px;
 				text-align: left;
 			}
-			.mailchimp-woocommerce-deactivate-survey .error {
+			.squalomail-woocommerce-deactivate-survey .error {
 				display: block;
 				color: red;
 				margin: 0 0 10px 0;
 			}
-			.mailchimp-woocommerce-deactivate-survey-header {
+			.squalomail-woocommerce-deactivate-survey-header {
 				display: block;
 				font-size: 18px;
 				font-weight: 700;
@@ -267,40 +267,40 @@ if ( ! class_exists( 'Mailchimp_Woocommerce_Deactivation_Survey', false ) ) {
 				margin: 0 0 18px 0;	
 				position: relative;
 			}
-			.mailchimp-woocommerce-deactivate-survey-title {
+			.squalomail-woocommerce-deactivate-survey-title {
 				text-align: left;
 			}
-			.mailchimp-woocommerce-deactivate-survey-close {
+			.squalomail-woocommerce-deactivate-survey-close {
 				text-align: right;
 				position: absolute;
 				right: 0px;
 				font-size: 24px;
 				cursor: pointer;
 			}
-			.mailchimp-woocommerce-deactivate-survey-title span {
+			.squalomail-woocommerce-deactivate-survey-title span {
 				color: #999;
 				margin-right: 10px;
 			}
-			.mailchimp-woocommerce-deactivate-survey-desc {
+			.squalomail-woocommerce-deactivate-survey-desc {
 				display: block;
 				font-weight: 600;
 				margin: 0 0 18px 0;
 			}
-			.mailchimp-woocommerce-deactivate-survey-option {
+			.squalomail-woocommerce-deactivate-survey-option {
 				margin: 0 0 10px 0;
 			}
-			.mailchimp-woocommerce-deactivate-survey-option-input {
+			.squalomail-woocommerce-deactivate-survey-option-input {
 				margin-right: 10px !important;
 			}
-			.mailchimp-woocommerce-deactivate-survey-option-details {
+			.squalomail-woocommerce-deactivate-survey-option-details {
 				display: none;
 				width: 90%;
 				margin: 10px 0 0 30px;
 			}
-			.mailchimp-woocommerce-deactivate-survey-footer {
+			.squalomail-woocommerce-deactivate-survey-footer {
 				margin-top: 18px;
 			}
-			.mailchimp-woocommerce-deactivate-survey-deactivate {
+			.squalomail-woocommerce-deactivate-survey-deactivate {
 				float: right;
 				font-size: 13px;
 				color: #ccc;
@@ -324,79 +324,79 @@ if ( ! class_exists( 'Mailchimp_Woocommerce_Deactivation_Survey', false ) ) {
 
 			$options = array(
 				1 => array(
-					'title'   => esc_html__( 'I want to change the audience associated with this integration.', 'mailchimp-for-woocommerce' ),
+					'title'   => esc_html__( 'I want to change the audience associated with this integration.', 'squalomail-for-woocommerce' ),
 					'reason'   => 'I want to change the audience associated with this integration.'
 				),
 				2 => array(
-					'title'   => esc_html__( 'I want to change the site or store connected through this integration.', 'mailchimp-for-woocommerce' ),
+					'title'   => esc_html__( 'I want to change the site or store connected through this integration.', 'squalomail-for-woocommerce' ),
 					'reason'   => 'I want to change the site or store connected through this integration.'
 				),
 				3 => array(
-					'title'   => esc_html__( 'The order data isn\'t syncing.', 'mailchimp-for-woocommerce' ),
+					'title'   => esc_html__( 'The order data isn\'t syncing.', 'squalomail-for-woocommerce' ),
 					'reason'   => 'The order data isn\'t syncing.'
 				),
 				4 => array(
-					'title'   => esc_html__( 'The promo codes aren\'t showing up.', 'mailchimp-for-woocommerce' ),
+					'title'   => esc_html__( 'The promo codes aren\'t showing up.', 'squalomail-for-woocommerce' ),
 					'reason'   => 'The promo codes aren\'t showing up.'
 				),
 				5 => array(
-					'title'   => esc_html__( 'I\'m trying to troubleshoot the integration.', 'mailchimp-for-woocommerce' ),
+					'title'   => esc_html__( 'I\'m trying to troubleshoot the integration.', 'squalomail-for-woocommerce' ),
 					'reason'   => 'I\'m trying to troubleshoot the integration.'
 				),
 				6 => array(
-					'title'   => esc_html__( 'I was instructed to disconnect by Mailchimp Support.', 'mailchimp-for-woocommerce' ),
+					'title'   => esc_html__( 'I was instructed to disconnect by Mailchimp Support.', 'squalomail-for-woocommerce' ),
 					'reason'   => 'I was instructed to disconnect by Mailchimp Support.'
 				),
 				7 => array(
-					'title'   => esc_html__( 'I no longer use this integration.', 'mailchimp-for-woocommerce' ),
+					'title'   => esc_html__( 'I no longer use this integration.', 'squalomail-for-woocommerce' ),
 					'reason'   => 'I no longer use this integration.'
 				),
 				8 => array(
-					'title'   => esc_html__( 'It\'s a temporary deactivation.', 'mailchimp-for-woocommerce' ),
+					'title'   => esc_html__( 'It\'s a temporary deactivation.', 'squalomail-for-woocommerce' ),
 					'reason'   => 'It\'s a temporary deactivation.'
 				),
 				9 => array(
-					'title'   => esc_html__( 'Other', 'mailchimp-for-woocommerce' ),
+					'title'   => esc_html__( 'Other', 'squalomail-for-woocommerce' ),
 					'reason'   => 'Other',
-					'details' => esc_html__( 'Please share the reason', 'mailchimp-for-woocommerce' ),
+					'details' => esc_html__( 'Please share the reason', 'squalomail-for-woocommerce' ),
 				),
 			);
 			?>
-			<div class="mailchimp-woocommerce-deactivate-survey-modal" id="mailchimp-woocommerce-deactivate-survey-<?php echo $this->plugin; ?>">
-				<div class="mailchimp-woocommerce-deactivate-survey-wrap">
-					<form class="mailchimp-woocommerce-deactivate-survey" method="post">
-						<span class="mailchimp-woocommerce-deactivate-survey-header">
+			<div class="squalomail-woocommerce-deactivate-survey-modal" id="squalomail-woocommerce-deactivate-survey-<?php echo $this->plugin; ?>">
+				<div class="squalomail-woocommerce-deactivate-survey-wrap">
+					<form class="squalomail-woocommerce-deactivate-survey" method="post">
+						<span class="squalomail-woocommerce-deactivate-survey-header">
 							<span class="dashicons dashicons-testimonial"></span>
-							<?php echo ' ' . esc_html__( 'Quick Feedback', 'mailchimp-for-woocommerce' ); ?>
-							<span title="<?php esc_attr_e( 'Close', 'mailchimp-for-woocommerce' );?> " class="mailchimp-woocommerce-deactivate-survey-close">✕</span>
+							<?php echo ' ' . esc_html__( 'Quick Feedback', 'squalomail-for-woocommerce' ); ?>
+							<span title="<?php esc_attr_e( 'Close', 'squalomail-for-woocommerce' );?> " class="squalomail-woocommerce-deactivate-survey-close">✕</span>
 						</span>
 
-						<span class="mailchimp-woocommerce-deactivate-survey-desc">
+						<span class="squalomail-woocommerce-deactivate-survey-desc">
 							<?php
 							printf(
 								/* translators: %s - plugin name. */
-								esc_html__( 'If you have a moment, please share why you are deactivating %s:', 'mailchimp-for-woocommerce' ),
-								esc_html__( 'Mailchimp for Woocommerce', 'mailchimp-for-woocommerce')
+								esc_html__( 'If you have a moment, please share why you are deactivating %s:', 'squalomail-for-woocommerce' ),
+								esc_html__( 'Mailchimp for Woocommerce', 'squalomail-for-woocommerce')
 							);
 							?>
 						</span>
-						<div class="mailchimp-woocommerce-deactivate-survey-options">
+						<div class="squalomail-woocommerce-deactivate-survey-options">
 							<?php foreach ( $options as $id => $option ) : ?>
-							<div class="mailchimp-woocommerce-deactivate-survey-option">
-								<label for="mailchimp-woocommerce-deactivate-survey-option-<?php echo $this->plugin; ?>-<?php echo $id; ?>" class="mailchimp-woocommerce-deactivate-survey-option-label">
-									<input id="mailchimp-woocommerce-deactivate-survey-option-<?php echo $this->plugin; ?>-<?php echo $id; ?>" class="mailchimp-woocommerce-deactivate-survey-option-input" type="radio" name="code" value="<?php echo $id; ?>" />
-									<span class="mailchimp-woocommerce-deactivate-survey-option-title"><?php echo $option['title']; ?></span>
-									<input class="mailchimp-woocommerce-deactivate-survey-option-reason" type="hidden" value="<?php echo $option['reason']; ?>"  />
+							<div class="squalomail-woocommerce-deactivate-survey-option">
+								<label for="squalomail-woocommerce-deactivate-survey-option-<?php echo $this->plugin; ?>-<?php echo $id; ?>" class="squalomail-woocommerce-deactivate-survey-option-label">
+									<input id="squalomail-woocommerce-deactivate-survey-option-<?php echo $this->plugin; ?>-<?php echo $id; ?>" class="squalomail-woocommerce-deactivate-survey-option-input" type="radio" name="code" value="<?php echo $id; ?>" />
+									<span class="squalomail-woocommerce-deactivate-survey-option-title"><?php echo $option['title']; ?></span>
+									<input class="squalomail-woocommerce-deactivate-survey-option-reason" type="hidden" value="<?php echo $option['reason']; ?>"  />
 								</label>
 								<?php if ( ! empty( $option['details'] ) ) : ?>
-								<input class="mailchimp-woocommerce-deactivate-survey-option-details" type="text" placeholder="<?php echo $option['details']; ?>" />								
+								<input class="squalomail-woocommerce-deactivate-survey-option-details" type="text" placeholder="<?php echo $option['details']; ?>" />								
 								<?php endif; ?>
 							</div>
 							<?php endforeach; ?>
 						</div>
-						<div class="mailchimp-woocommerce-deactivate-survey-footer">
-							<button type="submit" class="mailchimp-woocommerce-deactivate-survey-submit button button-primary button-large"><?php echo esc_html__( 'Submit & Deactivate', 'mailchimp-for-woocommerce' ); ?></button>
-							<a href="#" class="mailchimp-woocommerce-deactivate-survey-deactivate"><?php echo esc_html__( 'Skip & Deactivate', 'mailchimp-for-woocommerce' ); ?></a>
+						<div class="squalomail-woocommerce-deactivate-survey-footer">
+							<button type="submit" class="squalomail-woocommerce-deactivate-survey-submit button button-primary button-large"><?php echo esc_html__( 'Submit & Deactivate', 'squalomail-for-woocommerce' ); ?></button>
+							<a href="#" class="squalomail-woocommerce-deactivate-survey-deactivate"><?php echo esc_html__( 'Skip & Deactivate', 'squalomail-for-woocommerce' ); ?></a>
 						</div>
 					</form>
 				</div>

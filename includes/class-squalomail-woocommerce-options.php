@@ -14,7 +14,7 @@ abstract class MailChimp_WooCommerce_Options
      * @var MailChimp_WooCommerce_MailChimpApi
      */
     protected $api;
-    protected $plugin_name = 'mailchimp-woocommerce';
+    protected $plugin_name = 'squalomail-woocommerce';
     protected $environment = 'production';
     protected $version = '1.0.0';
     protected $plugin_options = null;
@@ -25,9 +25,9 @@ abstract class MailChimp_WooCommerce_Options
      */
     public function adminReady()
     {
-        $this->is_admin = current_user_can(mailchimp_get_allowed_capability());
-        if (get_option('mailchimp_woocommerce_plugin_do_activation_redirect', false)) {
-            delete_option('mailchimp_woocommerce_plugin_do_activation_redirect');
+        $this->is_admin = current_user_can(squalomail_get_allowed_capability());
+        if (get_option('squalomail_woocommerce_plugin_do_activation_redirect', false)) {
+            delete_option('squalomail_woocommerce_plugin_do_activation_redirect');
 
             // don't do the redirect while activating the plugin through the rest API. ( Bartosz from Woo asked for this )
             if ((defined( 'REST_REQUEST' ) && REST_REQUEST)) {
@@ -39,13 +39,13 @@ abstract class MailChimp_WooCommerce_Options
             // if the onboarding profile has business extensions
             if (is_array($onboarding_profile) && array_key_exists('business_extensions', $onboarding_profile)) {
                 // if the business extensions contains our plugin, we just skip this.
-                if (is_array($onboarding_profile['business_extensions']) && in_array('mailchimp-for-woocommerce', $onboarding_profile['business_extensions'])) {
+                if (is_array($onboarding_profile['business_extensions']) && in_array('squalomail-for-woocommerce', $onboarding_profile['business_extensions'])) {
                     return;
                 }
             }
 
             if (!isset($_GET['activate-multi'])) {
-                wp_redirect("admin.php?page=mailchimp-woocommerce");
+                wp_redirect("admin.php?page=squalomail-woocommerce");
             }
         }
     }
@@ -82,7 +82,7 @@ abstract class MailChimp_WooCommerce_Options
      */
     public function getUniqueStoreID()
     {
-        return mailchimp_get_store_id();
+        return squalomail_get_store_id();
     }
 
     /**
@@ -250,7 +250,7 @@ abstract class MailChimp_WooCommerce_Options
     public function api()
     {
         if (empty($this->api)) {
-            $this->api = new MailChimp_WooCommerce_MailChimpApi($this->getOption('mailchimp_api_key', false));
+            $this->api = new MailChimp_WooCommerce_MailChimpApi($this->getOption('squalomail_api_key', false));
         }
 
         return $this->api;
@@ -295,27 +295,27 @@ abstract class MailChimp_WooCommerce_Options
 
     public function removeProductPointers()
     {
-        delete_option('mailchimp-woocommerce-sync.products.completed_at');
-        delete_option('mailchimp-woocommerce-sync.products.current_page');
+        delete_option('squalomail-woocommerce-sync.products.completed_at');
+        delete_option('squalomail-woocommerce-sync.products.current_page');
     }
 
     public function removeOrderPointers()
     {
-        delete_option('mailchimp-woocommerce-sync.orders.prevent');
-        delete_option('mailchimp-woocommerce-sync.orders.completed_at');
-        delete_option('mailchimp-woocommerce-sync.orders.current_page');
+        delete_option('squalomail-woocommerce-sync.orders.prevent');
+        delete_option('squalomail-woocommerce-sync.orders.completed_at');
+        delete_option('squalomail-woocommerce-sync.orders.current_page');
     }
 
     public function removeSyncPointers()
     {
-        mailchimp_flush_sync_pointers();
+        squalomail_flush_sync_pointers();
     }
 
     public function removeMiscPointers()
     {
-        delete_option('mailchimp-woocommerce-errors.store_info');
-        delete_option('mailchimp-woocommerce-validation.api.ping');
-        delete_option('mailchimp-woocommerce-cached-api-lists');
-        delete_option('mailchimp-woocommerce-cached-api-ping-check');
+        delete_option('squalomail-woocommerce-errors.store_info');
+        delete_option('squalomail-woocommerce-validation.api.ping');
+        delete_option('squalomail-woocommerce-cached-api-lists');
+        delete_option('squalomail-woocommerce-cached-api-ping-check');
     }
 }

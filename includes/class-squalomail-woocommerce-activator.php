@@ -27,32 +27,32 @@ class MailChimp_WooCommerce_Activator {
 		//static::migrate_jobs();
 
 		// update the settings so we have them for use.
-        $saved_options = get_option('mailchimp-woocommerce', false);
+        $saved_options = get_option('squalomail-woocommerce', false);
 
         // if we haven't saved options previously, we will need to create the site id and update base options
         if (empty($saved_options)) {
-            mailchimp_clean_database();
-            update_option('mailchimp-woocommerce', array());
+            squalomail_clean_database();
+            update_option('squalomail-woocommerce', array());
             // only do this if the option has never been set before.
             if (!is_multisite()) {
-                add_option('mailchimp_woocommerce_plugin_do_activation_redirect', true);
+                add_option('squalomail_woocommerce_plugin_do_activation_redirect', true);
             }
         }
 
         // if we haven't saved the store id yet.
-        $saved_store_id = get_option('mailchimp-woocommerce-store_id', false);
+        $saved_store_id = get_option('squalomail-woocommerce-store_id', false);
         if (empty($saved_store_id)) {
             // add a store id flag which will be a random hash
-            update_option('mailchimp-woocommerce-store_id', uniqid(), 'yes');
+            update_option('squalomail-woocommerce-store_id', uniqid(), 'yes');
         }
 
         if (class_exists('MailChimp_WooCommerce_MailChimpApi')) {
             // try this now for existing stores on an update.
-            mailchimp_update_connected_site_script();
+            squalomail_update_connected_site_script();
 		}
 		
 		// set initial comm status
-		mailchimp_update_communication_status();
+		squalomail_update_communication_status();
 	}
 
 	/**
@@ -68,7 +68,7 @@ class MailChimp_WooCommerce_Activator {
 
 		$charset_collate = $wpdb->get_charset_collate();
 
-		$sql = "CREATE TABLE IF NOT EXISTS {$wpdb->prefix}mailchimp_carts (
+		$sql = "CREATE TABLE IF NOT EXISTS {$wpdb->prefix}squalomail_carts (
 				id VARCHAR (255) NOT NULL,
 				email VARCHAR (100) NOT NULL,
 				user_id INT (11) DEFAULT NULL,
@@ -79,7 +79,7 @@ class MailChimp_WooCommerce_Activator {
 
 		dbDelta( $sql );
 		
-		$sql = "CREATE TABLE IF NOT EXISTS {$wpdb->prefix}mailchimp_jobs (
+		$sql = "CREATE TABLE IF NOT EXISTS {$wpdb->prefix}squalomail_jobs (
 			id bigint(20) NOT NULL AUTO_INCREMENT,
 			obj_id text,
 			job text NOT NULL,
@@ -90,7 +90,7 @@ class MailChimp_WooCommerce_Activator {
 		dbDelta( $sql );
 
 		// set the Mailchimp woocommerce version at the time of install
-		update_site_option('mailchimp_woocommerce_version', mailchimp_environment_variables()->version);
+		update_site_option('squalomail_woocommerce_version', squalomail_environment_variables()->version);
 	}
 
 		/**
@@ -103,14 +103,14 @@ class MailChimp_WooCommerce_Activator {
 		require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
 		global $wpdb;
         if($wpdb->get_var("SHOW TABLES LIKE '{$wpdb->prefix}queue';") == $wpdb->prefix.'queue') {
-			mailchimp_log('update.db','Migrating job to Action Scheduler');
+			squalomail_log('update.db','Migrating job to Action Scheduler');
 			$sql = "SELECT * FROM {$wpdb->prefix}queue;";
 			$queue_jobs = $wpdb->get_results($sql);
 			foreach ($queue_jobs as $queue_job) {
 				$job = unserialize($queue_job->job);
 				$job->job = $job;
 				$job->id = static::get_possible_job_ids($job);	
-				mailchimp_as_push($job, 90);
+				squalomail_as_push($job, 90);
 			}
 		}
 	}

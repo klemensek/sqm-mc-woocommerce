@@ -4,7 +4,7 @@
 * tested for wordpress v5.7
 * fix for cookies.js samesite error
 * adds sync completion email sent to admin
-* resolves php error for mailchimp_set_user_by_email on checkout page 
+* resolves php error for squalomail_set_user_by_email on checkout page 
 * additional database error handling
 = 2.5 =
 * interface reskin
@@ -114,7 +114,7 @@
 * adds action scheduler queue system 
 * documentation for Custom Merge Tags 
 * adds more specific installation requirements 
-* fixes PHP Error in class-mailchimp-order.php
+* fixes PHP Error in class-squalomail-order.php
 * fixes pop up blocks on connection
 * fixes unable to sync without accepting to auto subscribe existing customers
 * documentation for wp-cli class queue-command
