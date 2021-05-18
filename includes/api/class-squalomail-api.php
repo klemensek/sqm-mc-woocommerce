@@ -1046,8 +1046,8 @@ class SqualoMail_WooCommerce_SqualoMailApi
 
             // if the order is in pending status, we need to submit the order again with a paid status.
             if ($order->shouldConfirmAndPay() && $order->getFinancialStatus() !== 'paid') {
-                $order->setFinancialStatus('paid');
-                $data = $this->patch("ecommerce/stores/{$store_id}/orders/{$order->getId()}", $order->toArray());
+                // $order->setFinancialStatus('paid');
+                // $data = $this->patch("ecommerce/stores/{$store_id}/orders/{$order->getId()}", $order->toArray());
             }
 
             // update the member tags but fail silently just in case.
