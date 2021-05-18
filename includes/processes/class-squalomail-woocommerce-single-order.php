@@ -128,10 +128,10 @@ class SqualoMail_WooCommerce_Single_Order extends Squalomail_Woocommerce_Job
 
             // if the order is new, and has been flagged as a status that should not be pushed over to
             // Squalomail - just ignore it and log it.
-            if ($new_order && $order->shouldIgnoreIfNotInSqualomail()) {
-                squalomail_log('system.debug', "order {$order->getId()} is in {$order->getOriginalWooStatus()} status, and is being skipped for now.");
-                return false;
-            }
+            // if ($new_order && $order->shouldIgnoreIfNotInSqualomail()) {
+            //     squalomail_log('system.debug', "order {$order->getId()} is in {$order->getOriginalWooStatus()} status, and is being skipped for now.");
+            //     return false;
+            // }
             
             // see if we need to prevent this order from being submitted.
             $email = $order->getCustomer()->getEmailAddress();
@@ -206,27 +206,27 @@ class SqualoMail_WooCommerce_Single_Order extends Squalomail_Woocommerce_Job
             if ( $new_order) {
                 // if single sync and
                 // if the order is in failed or cancelled status - and it's brand new, we shouldn't submit it.
-                if (!$this->is_full_sync && in_array($order->getFinancialStatus(), array('failed', 'cancelled')) || $order->getOriginalWooStatus() === 'pending') {
-                    squalomail_log('order_sumbit', "#{$order->getId()} has a financial status of {$order->getFinancialStatus()} and was skipped.");
-                    return false;
-                }
+                // if (!$this->is_full_sync && in_array($order->getFinancialStatus(), array('failed', 'cancelled')) || $order->getOriginalWooStatus() === 'pending') {
+                //     squalomail_log('order_sumbit', "#{$order->getId()} has a financial status of {$order->getFinancialStatus()} and was skipped.");
+                //     return false;
+                // }
                 // if full sync and
                 // if the original woocommerce status is actually pending, we need to skip these on new orders because
                 // it is probably happening due to 3rd party payment processing and it's still pending. These orders
                 // don't always make it over because someone could be cancelling out of the payment there.
-                if ($this->is_full_sync && !in_array(strtolower($order->getFinancialStatus()), array('processing', 'completed', 'paid'))) {
-                    squalomail_log('order_sumbit', "#{$order->getId()} has a financial status of {$order->getFinancialStatus()} and was skipped.");
-                    return false;
-                }
+                // if ($this->is_full_sync && !in_array(strtolower($order->getFinancialStatus()), array('processing', 'completed', 'paid'))) {
+                //     squalomail_log('order_sumbit', "#{$order->getId()} has a financial status of {$order->getFinancialStatus()} and was skipped.");
+                //     return false;
+                // }
 
             }
 
             // if the order is brand new, and we already have a paid status,
             // we need to double up the post to force the confirmation + the invoice.
-            if ($new_order && $order->getFinancialStatus() === 'paid') {
-                $order->setFinancialStatus('pending');
-                $order->confirmAndPay(true);
-            }
+            // if ($new_order && $order->getFinancialStatus() === 'paid') {
+            //     $order->setFinancialStatus('pending');
+            //     $order->confirmAndPay(true);
+            // }
 
             // if we're overriding this we need to set it here.
             if ($this->partially_refunded) {
