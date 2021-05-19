@@ -90,7 +90,7 @@ if ( ! class_exists( 'SqualoMail_WooCommerce_Process_Full_Sync_Manager' ) ) {
 			squalomail_get_api()->flagStoreSync(squalomail_get_store_id(), false);
 
 			// send the sync finished email.
-			SqualoMail_WooCommerce_Admin::instance()->squalomail_send_sync_finished_email();
+			// SqualoMail_WooCommerce_Admin::instance()->squalomail_send_sync_finished_email();
 			
 			squalomail_update_communication_status();
 
