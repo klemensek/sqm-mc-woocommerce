@@ -245,6 +245,7 @@ class SqualoMail_WooCommerce_Cart
     public function toArrayForUpdate()
     {
         return squalomail_array_remove_empty(array(
+            'customer' => $this->getCustomer()->toArray(),
             'campaign_id' => (string) $this->getCampaignID(),
             'checkout_url' => (string) $this->getCheckoutURL(),
             'currency_code' => (string) $this->getCurrencyCode(),
