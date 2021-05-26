@@ -96,6 +96,27 @@ function squalomail_environment_variables() {
 }
 
 /**
+ * Remove pending jobs.
+ * 
+ * @param string $job
+ * @param string $jobId
+ */
+function squalomail_unqueue($job, $jobId) {
+    $existing_actions = function_exists('as_get_scheduled_actions') ? as_get_scheduled_actions(array(
+        'hook' => $job, 
+        'status' => ActionScheduler_Store::STATUS_PENDING,  
+        'args' => array('obj_id' => $jobId),
+        'group' => 'sqm-woocommerce'
+    )) : null;
+    
+    if (!empty($existing_actions)) {
+        try {
+            as_unschedule_action($job, array('obj_id' => $jobId), 'sqm-woocommerce');
+        } catch (\Exception $e) {}
+    }
+}
+
+/**
  * Push a job onto the Action Scheduler queue.
  *
  * @param Squalomail_Woocommerce_Job $job

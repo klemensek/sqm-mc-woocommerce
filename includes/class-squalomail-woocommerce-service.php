@@ -197,7 +197,9 @@ class SqualoMail_Service extends SqualoMail_WooCommerce_Options
     public function clearCartData()
     {
         if ($user_email = $this->getCurrentUserEmail()) {
-            $this->deleteCart(squalomail_hash_trim_lower($user_email));
+            $id = squalomail_hash_trim_lower($user_email);
+            $this->deleteCart($id);
+            $this->api()->deleteCartByID($this->getUniqueStoreID(), $id);
         }
     }
 
@@ -211,9 +213,7 @@ class SqualoMail_Service extends SqualoMail_WooCommerce_Options
             return !is_null($updated) ? $updated : false;
         }
 
-        if (empty($this->cart)) {
-            $this->cart = $this->getCartItems();
-        }
+        $this->cart = $this->getCartItems();
 
         if (($user_email = $this->getCurrentUserEmail())) {
 
@@ -222,30 +222,12 @@ class SqualoMail_Service extends SqualoMail_WooCommerce_Options
                 return !is_null($updated) ? $updated : false;
             }
 
-            $previous = $this->getPreviousEmailFromSession();
-
             $uid = squalomail_hash_trim_lower($user_email);
 
-            $unique_sid = $this->getUniqueStoreID();
-
-            // delete the previous records.
-            if (!empty($previous) && $previous !== $user_email) {
-
-                if ($this->api()->deleteCartByID($unique_sid, $previous_email = squalomail_hash_trim_lower($previous))) {
-                    squalomail_log('ac.cart_swap', "Deleted cart [$previous] :: ID [$previous_email]");
-                }
-
-                // going to delete the cart because we are switching.
-                $this->deleteCart($previous_email);
-            }
-
-            // delete the current cart record if there is one
-            $this->api()->deleteCartByID($unique_sid, $uid);
+            // track the cart locally so we can repopulate things for cross device compatibility.
+            $this->trackCart($uid, $user_email);
 
             if ($this->cart && !empty($this->cart)) {
-
-                // track the cart locally so we can repopulate things for cross device compatibility.
-                $this->trackCart($uid, $user_email);
 
                 $this->cart_was_submitted = true;
 
@@ -258,6 +240,8 @@ class SqualoMail_Service extends SqualoMail_WooCommerce_Options
                 // fire up the job handler
                 $handler = new SqualoMail_WooCommerce_Cart_Update($uid, $user_email, $campaign, $this->cart, $language);
                 squalomail_handle_or_queue($handler);
+            } else {
+                squalomail_unqueue(SqualoMail_WooCommerce_Cart_Update::class, $uid);
             }
 
             return !is_null($updated) ? $updated : true;
@@ -473,15 +457,17 @@ class SqualoMail_Service extends SqualoMail_WooCommerce_Options
      */
     public function getCartItems()
     {
-        if (!($this->cart = $this->getWooSession('cart', false))) {
-            $this->cart = !function_exists('WC') ? false : WC()->cart->get_cart();
+        if (function_exists('WC')) {
+            $this->cart = WC()->cart->get_cart();
         } else {
-            $cart_session = array();
-            foreach ( $this->cart as $key => $values ) {
-                $cart_session[$key] = $values;
-                unset($cart_session[$key]['data']); // Unset product object
+            if (!($this->cart = $this->getWooSession('cart', false))) {
+                $cart_session = array();
+                foreach ( $this->cart as $key => $values ) {
+                    $cart_session[$key] = $values;
+                    unset($cart_session[$key]['data']); // Unset product object
+                }
+                return $this->cart = $cart_session;
             }
-            return $this->cart = $cart_session;
         }
 
         return is_array($this->cart) ? $this->cart : false;

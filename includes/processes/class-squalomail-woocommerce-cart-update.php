@@ -77,6 +77,27 @@ class SqualoMail_WooCommerce_Cart_Update extends Squalomail_Woocommerce_Job
     }
 
     /**
+     * @param SqualoMail_WooCommerce_SqualoMailApi $api
+     * @param string $storeId
+     * @return bool
+     */
+    private function shouldCreateSqualoMailCart($api, $storeId)
+    {
+        return !$api->getCart($storeId, $this->id);
+    }
+
+    /**
+     * @param bool $shouldCreateCart
+     * @param SqualoMail_WooCommerce_SqualoMailApi $api
+     * @param string $storeId
+     * @param SqualoMail_WooCommerce_Cart $cart
+     * @return bool|SqualoMail_WooCommerce_Cart
+     */
+    private function modifySqualoMailCart($shouldCreateCart, $api, $storeId, $cart) {
+        return $shouldCreateCart ? $api->addCart($storeId, $cart, false) : $api->updateCart($storeId, $cart, false);
+    }
+
+    /**
      * @return bool|SqualoMail_WooCommerce_Cart
      */
     public function process()
@@ -92,9 +113,6 @@ class SqualoMail_WooCommerce_Cart_Update extends Squalomail_Woocommerce_Job
             $store_id = squalomail_get_store_id();
 
             $this->cart_data = json_decode($this->cart_data, true);
-
-            // delete it and the add it back.
-            $api->deleteCartByID($store_id, $this->id);
 
             // if they emptied the cart ignore it.
             if (!is_array($this->cart_data) || empty($this->cart_data)) {
@@ -151,10 +169,12 @@ class SqualoMail_WooCommerce_Cart_Update extends Squalomail_Woocommerce_Job
 
             $cart->setOrderTotal($order_total);
 
+            $shouldCreateCart = $this->shouldCreateSqualoMailCart($api, $store_id);
+
             try {
                 try {
                     // if the post is successful we're all good.
-                    if ($api->addCart($store_id, $cart, false) !== false) {
+                    if ($this->modifySqualoMailCart($shouldCreateCart, $api, $store_id, $cart) !== false) {
                         squalomail_log('abandoned_cart.success', "email: {$customer->getEmailAddress()} :: checkout_url: $checkout_url");
                     }
                 } catch (\Exception $e) {
@@ -163,7 +183,7 @@ class SqualoMail_WooCommerce_Cart_Update extends Squalomail_Woocommerce_Job
                     if (squalomail_string_contains($e->getMessage(), 'campaign with the')) {
                         // remove the campaign ID and re-submit
                         $cart->removeCampaignID();
-                        if ($api->addCart($store_id, $cart, false) !== false) {
+                        if ($this->modifySqualoMailCart($shouldCreateCart, $api, $store_id, $cart) !== false) {
                             squalomail_log('abandoned_cart.success', "email: {$customer->getEmailAddress()} :: checkout_url: $checkout_url");
                         }
                     } else {
@@ -186,7 +206,7 @@ class SqualoMail_WooCommerce_Cart_Update extends Squalomail_Woocommerce_Job
                 }
 
                 // if the post is successful we're all good.
-                $api->addCart($store_id, $cart, false);
+                $this->modifySqualoMailCart($shouldCreateCart, $api, $store_id, $cart);
 
                 squalomail_log('abandoned_cart.success', "email: {$customer->getEmailAddress()}");
             }
