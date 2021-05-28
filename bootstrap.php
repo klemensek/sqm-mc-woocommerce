@@ -136,10 +136,12 @@ function squalomail_as_push( Squalomail_Woocommerce_Job $job, $delay = 0 ) {
 
     if ($job->get_attempts() <= 5) {
         
+        $jobSerialized = maybe_serialize($job);
+        $createdAt = gmdate( 'Y-m-d H:i:s', time() );
         $args = array(
-            'job' => maybe_serialize($job),
+            'job' => $jobSerialized,
             'obj_id' => $job_id,
-            'created_at'   => gmdate( 'Y-m-d H:i:s', time() )
+            'created_at'   => $createdAt
         );
         
         $existing_actions =  function_exists('as_get_scheduled_actions') ? as_get_scheduled_actions(array(
@@ -154,6 +156,15 @@ function squalomail_as_push( Squalomail_Woocommerce_Job $job, $delay = 0 ) {
         if (!empty($existing_actions)) {
             try {
                 as_unschedule_action(get_class($job), array('obj_id' => $job->id), 'sqm-woocommerce');
+                if (strpos($jobSerialized, 'SqualoMail_WooCommerce_Cart_Update') !== false) {
+                    $wpdb->update(
+                        $wpdb->prefix."squalomail_jobs",
+                        ['job' => $jobSerialized, 'created_at' => $createdAt],
+                        ['obj_id' => $job_id],
+                        ['%s', '%s'],
+                        ['%s']
+                    );
+                }
             } catch (\Exception $e) {}
         }
         else {
