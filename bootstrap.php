@@ -34,6 +34,7 @@ spl_autoload_register(function($class) {
         'SqualoMail_WooCommerce_PromoCode' => 'includes/api/assets/class-squalomail-promo-code.php',
         'SqualoMail_WooCommerce_PromoRule' => 'includes/api/assets/class-squalomail-promo-rule.php',
         'SqualoMail_WooCommerce_Store' => 'includes/api/assets/class-squalomail-store.php',
+        'SqualoMail_WooCommerce_Category' => 'includes/api/assets/class-squalomail-category.php',
 
         // includes/api/errors
         'SqualoMail_WooCommerce_Error' => 'includes/api/errors/class-squalomail-error.php',
@@ -51,6 +52,7 @@ spl_autoload_register(function($class) {
         'SqualoMail_WooCommerce_Transform_Coupons' => 'includes/api/class-squalomail-woocommerce-transform-coupons.php',
         'SqualoMail_WooCommerce_Transform_Orders' => 'includes/api/class-squalomail-woocommerce-transform-orders-wc3.php',
         'SqualoMail_WooCommerce_Transform_Products' => 'includes/api/class-squalomail-woocommerce-transform-products.php',
+        'SqualoMail_WooCommerce_Transform_Categories' => 'includes/api/class-squalomail-woocommerce-transform-categories.php',
 
         // includes/processes
         'Squalomail_Woocommerce_Job' => 'includes/processes/class-squalomail-woocommerce-job.php',
@@ -64,6 +66,8 @@ spl_autoload_register(function($class) {
         'SqualoMail_WooCommerce_Single_Product' => 'includes/processes/class-squalomail-woocommerce-single-product.php',
         'SqualoMail_WooCommerce_User_Submit' => 'includes/processes/class-squalomail-woocommerce-user-submit.php',
         'SqualoMail_WooCommerce_Process_Full_Sync_Manager' => 'includes/processes/class-squalomail-woocommerce-full-sync-manager.php',
+        'SqualoMail_WooCommerce_Product_Category' => 'includes/processes/class-squalomail-woocommerce-product-category.php',
+        'SqualoMail_WooCommerce_Process_Categories' => 'includes/processes/class-squalomail-woocommerce-process-categories.php',
         
         'SqualoMail_WooCommerce_Public' => 'public/class-squalomail-woocommerce-public.php',
         'SqualoMail_WooCommerce_Admin' => 'admin/class-squalomail-woocommerce-admin.php',
@@ -699,6 +703,23 @@ function squalomail_get_coupons_count() {
 /**
  * @return int
  */
+function squalomail_get_category_count() {
+    $terms = get_terms(array(
+        'taxonomy' => 'product_cat',
+        'hide_empty' => false
+    ));
+    $total = 0;
+
+    if (!empty($terms) && !is_wp_error($terms)) {
+        $total = count($terms);
+    } 
+
+    return $total;
+}
+
+/**
+ * @return int
+ */
 function squalomail_get_product_count() {
     $posts = squalomail_count_posts('product');
     unset($posts['auto-draft'], $posts['trash']);
@@ -1046,7 +1067,7 @@ function squalomail_delete_as_jobs() {
 }
 function squalomail_flush_sync_pointers() {
     // clean up the initial sync pointers
-    foreach (array('orders', 'products', 'coupons') as $resource_type) {
+    foreach (array('orders', 'products', 'categories', 'coupons') as $resource_type) {
         delete_option("squalomail-woocommerce-sync.{$resource_type}.started_at");
         delete_option("squalomail-woocommerce-sync.{$resource_type}.completed_at");
         delete_option("squalomail-woocommerce-sync.{$resource_type}.started_at");
@@ -1333,6 +1354,11 @@ if (defined( 'WP_CLI' ) && WP_CLI) {
                     case 'order_sync':
                         squalomail_handle_or_queue(new SqualoMail_WooCommerce_Process_Orders());
                         WP_CLI::success("queued up the order sync!");
+                        break;
+
+                    case 'category_sync':
+                        squalomail_handle_or_queue(new SqualoMail_WooCommerce_Process_Categories());
+                        WP_CLI::success("queued up the category sync!");
                         break;
 
                     case 'order':

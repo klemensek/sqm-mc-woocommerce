@@ -318,6 +318,65 @@ class SqualoMail_Service extends SqualoMail_WooCommerce_Options
     }
 
     /**
+     * Edit or create product category.
+     *
+     * @param int $term_id Term ID.
+     * @param int $tt_id Term taxonomy ID.
+     */
+    public function handleCategorySaved($term_id, $tt_id)
+    {
+        if (!squalomail_is_configured()) return;
+        
+        squalomail_handle_or_queue(new SqualoMail_WooCommerce_Product_Category($term_id), 7);
+    }
+
+    /**
+     * After product terms change.
+     *
+     * @param int $object_id Object ID.
+     * @param array $terms An array of object term IDs or slugs.
+     * @param array $tt_ids An array of term taxonomy IDs.
+     * @param string $taxonomy Taxonomy slug.
+     * @param bool $append Whether to append new terms to the old terms.
+     * @param array $old_tt_ids Old array of term taxonomy IDs.
+     */
+    public function handlePostCategoryUpdate($object_id, $terms, $tt_ids, $taxonomy, $append, $old_tt_ids)
+    {
+        if (!squalomail_is_configured()) return;
+
+        if ($taxonomy == 'product_cat') {
+            $terms_diff = array_merge(array_diff($tt_ids, $old_tt_ids), array_diff($old_tt_ids, $tt_ids));
+
+            if(!empty($terms_diff)) {
+                foreach($terms_diff as $term_id) {
+                    squalomail_handle_or_queue(new SqualoMail_WooCommerce_Product_Category($term_id), 7);
+                }
+            }
+        }
+    }
+
+    /**
+     * Delete product category.
+     *
+     * @param int $term_id Term ID.
+     * @param int $tt_id Term taxonomy ID.
+     * @param int $deleted_term Deleted term ID.
+     * @param int $object_ids
+     */
+    public function handleCategoryDeleted($term_id, $tt_id, $deleted_term, $object_ids)
+    {
+        if (!squalomail_is_configured()) return;
+
+        try {
+            $deleted = squalomail_get_api()->deleteStoreCategory(squalomail_get_store_id(), $term_id);
+            if ($deleted) squalomail_log('category.deleted', "deleted category {$term_id}");
+            else squalomail_log('category.delete_fail', "Unable to deleted category {$term_id}");
+        } catch (\Exception $e) {
+            squalomail_error('delete category', $e->getMessage());
+        }
+    }
+
+    /**
      * @param $post_id
      */
     public function handlePostTrashed($post_id)

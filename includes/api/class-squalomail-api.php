@@ -1253,6 +1253,113 @@ class SqualoMail_WooCommerce_SqualoMailApi
     }
 
     /**
+     * @param $store_id
+     * @param int $page
+     * @param int $count
+     * @return array|mixed|null|object
+     * @throws Exception
+     * @throws SqualoMail_WooCommerce_Error
+     * @throws SqualoMail_WooCommerce_ServerError
+     */
+    public function categories($store_id, $page = 1, $count = 10)
+    {
+        $result = $this->get('ecommerce/stores/'.$store_id.'/categories', array(
+            'start' => $page,
+            'count' => $count,
+            'offset' => ($page * $count),
+        ));
+
+        return $result;
+    }
+
+
+    /**
+     * @param $store_id
+     * @param $category_id
+     * @param boolean $throw
+     * @return bool|SqualoMail_WooCommerce_Category
+     * @throws Exception
+     */
+    public function getStoreCategory($store_id, $category_id, $throw = false)
+    {
+        try {
+            $data = $this->get("ecommerce/stores/$store_id/categories/$category_id");
+            if (!is_array($data)) {
+                throw new SqualoMail_WooCommerce_RateLimitError('getting category api failure, retry again.');
+            }
+            $category = new SqualoMail_WooCommerce_Category();
+            return $category->fromArray($data);
+        } catch (SqualoMail_WooCommerce_Error $e) {
+            if ($throw) throw $e;
+            return false;
+        }
+    }
+
+
+    /**
+     * @param $store_id
+     * @param SqualoMail_WooCommerce_Category $category
+     * @param bool $silent
+     * @return bool|SqualoMail_WooCommerce_Category
+     * @throws Exception
+     */
+    public function addStoreCategory($store_id, SqualoMail_WooCommerce_Category $category, $silent = true)
+    {
+        try {
+            if (!$this->validateStoreSubmission($category)) {
+                return false;
+            }
+            $data = $this->post("ecommerce/stores/$store_id/categories", $category->toArray());
+            update_option('squalomail-woocommerce-resource-last-updated', time());
+            $category = new SqualoMail_WooCommerce_Category();
+            return $category->fromArray($data);
+        } catch (\Exception $e) {
+            if (!$silent) throw $e;
+            squalomail_log('api.add_product.error', $e->getMessage(), array('submission' => $category->toArray()));
+            return false;
+        }
+    }
+
+    /**
+     * @param $store_id
+     * @param SqualoMail_WooCommerce_Category $category
+     * @param bool $silent
+     * @return bool|SqualoMail_WooCommerce_Category
+     * @throws Exception
+     */
+    public function updateStoreCategory($store_id, SqualoMail_WooCommerce_Category $category, $silent = true)
+    {
+        try {
+            if (!$this->validateStoreSubmission($category)) {
+                return false;
+            }
+            $data = $this->put("ecommerce/stores/$store_id/categories/{$category->getId()}", $category->toArray());
+            update_option('squalomail-woocommerce-resource-last-updated', time());
+            $category = new SqualoMail_WooCommerce_Category();
+            return $category->fromArray($data);
+        } catch (\Exception $e) {
+            if (!$silent) throw $e;
+            squalomail_log('api.update_product.error', $e->getMessage(), array('submission' => $category->toArray()));
+            return false;
+        }
+    }
+
+    /**
+     * @param $store_id
+     * @param $category_id
+     * @return bool
+     * @throws Exception
+     */
+    public function deleteStoreCategory($store_id, $category_id)
+    {
+        try {
+            return (bool) $this->delete("ecommerce/stores/$store_id/categories/$category_id");
+        } catch (SqualoMail_WooCommerce_Error $e) {
+            return false;
+        }
+    }
+
+    /**
      * @param SqualoMail_WooCommerce_Order $order
      * @return array
      */

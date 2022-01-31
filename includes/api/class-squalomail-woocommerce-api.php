@@ -81,13 +81,16 @@ class SqualoMail_WooCommerce_Api
 
     /**
      * @param $resource
-     * @return bool|SqualoMail_WooCommerce_Transform_Orders|SqualoMail_WooCommerce_Transform_Products|SqualoMail_WooCommerce_Transform_Coupons
+     * @return bool|SqualoMail_WooCommerce_Transform_Orders|SqualoMail_WooCommerce_Transform_Products|SqualoMail_WooCommerce_Transform_Categories|SqualoMail_WooCommerce_Transform_Coupons
      */
     public function engine($resource)
     {
         switch ($resource) {
             case 'products' :
                 return new SqualoMail_WooCommerce_Transform_Products();
+                break;
+            case 'categories' :
+                return new SqualoMail_WooCommerce_Transform_Categories();
                 break;
             case 'orders' :
                 return new SqualoMail_WooCommerce_Transform_Orders();

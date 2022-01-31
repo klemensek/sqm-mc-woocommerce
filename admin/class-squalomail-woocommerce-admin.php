@@ -1290,6 +1290,7 @@ class SqualoMail_WooCommerce_Admin extends SqualoMail_WooCommerce_Options {
 				var promo_rulesProgress = 0;
 				var orderProgress = 0;
 				var productProgress = 0;
+				var categoriesProgress = 0;
 
                 if (on_sync_tab === 'yes') {
                     var call_squalomail_for_stats = function (showSpinner = false) {
@@ -1345,6 +1346,23 @@ class SqualoMail_WooCommerce_Admin extends SqualoMail_WooCommerce_Options {
 									}
 									jQuery('.sync-stats-card.products .progress-bar').width(productsProgress+"%");
 
+									if (response.categories_page == 'complete') {
+										categoriesProgress = 100;
+										jQuery('#squalomail_category_count').html(response.categories_in_squalomail.toLocaleString(undefined, {maximumFractionDigits: 0})).css('display', 'inline-block');
+										jQuery('.sync-stats-card.categories .progress-bar-wrapper').hide();
+									} else {
+										if (response.categories_in_squalomail == 0) {
+											categoriesProgress = 0;
+											categoriesPartial = "0 / " + response.categories_in_store;
+										} else {
+											categoriesProgress = response.categories_in_squalomail / response.categories_in_store * 100
+											categoriesPartial = response.categories_in_squalomail + " / " + response.categories_in_store;
+										}
+										if (categoriesProgress > 100) categoriesProgress = 100;
+										jQuery('.squalomail_category_count_partial').html(categoriesPartial);
+									}
+									jQuery('.sync-stats-card.categories .progress-bar').width(categoriesProgress+"%");
+
 									if (response.orders_page == 'complete') {
 										ordersProgress = 100;
 										jQuery('#squalomail_order_count').html(response.orders_in_squalomail.toLocaleString(undefined, {maximumFractionDigits: 0})).css('display', 'inline-block');
@@ -1375,6 +1393,7 @@ class SqualoMail_WooCommerce_Admin extends SqualoMail_WooCommerce_Options {
 									jQuery('.sync-stats-card .progress-bar-wrapper').hide();
 									jQuery('#squalomail_order_count').css('display', 'inline-block');
 									jQuery('#squalomail_product_count').css('display', 'inline-block');
+									jQuery('#squalomail_category_count').css('display', 'inline-block');
 									jQuery('#squalomail_promo_rules_count').css('display', 'inline-block');
 								}
                             }
