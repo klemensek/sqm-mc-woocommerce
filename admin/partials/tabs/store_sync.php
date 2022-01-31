@@ -3,10 +3,11 @@
 $store_id = squalomail_get_store_id();
 
 $product_count = squalomail_get_product_count();
+$category_count = squalomail_get_category_count();
 $order_count = squalomail_get_order_count();
 $promo_rules_count = squalomail_count_posts('shop_coupon');
 
-$squalomail_total_products = $squalomail_total_orders = $squalomail_total_promo_rules = 0;
+$squalomail_total_products = $squalomail_total_orders = $squalomail_total_promo_rules = $squalomail_total_categories = 0;
 $squalomail_total_subscribers = $squalomail_total_unsubscribed = $squalomail_total_transactional = 0;
 
 $store_syncing = false;
@@ -51,6 +52,11 @@ if (($squalomail_api = squalomail_get_api()) && ($store = $squalomail_api->getSt
         $squalomail_total_products = $products['total_items'];
         if ($squalomail_total_products > $product_count) $squalomail_total_products = $product_count;
     } catch (\Exception $e) { $squalomail_total_products = 0; }
+    try {
+        $categories = $squalomail_api->categories($store_id, 1, 1);
+        $squalomail_total_categories = $categories['total_items'];
+        if ($squalomail_total_categories > $category_count) $squalomail_total_categories = $category_count;
+    } catch (\Exception $e) { $squalomail_total_categories = 0; }
     try {
         $orders = $squalomail_api->orders($store_id, 1, 1);
         $squalomail_total_orders = $orders['total_items'];
@@ -136,6 +142,16 @@ if (($squalomail_api = squalomail_get_api()) && ($store = $squalomail_api->getSt
                     <span class="card_count" id="squalomail_product_count"><?php echo number_format($squalomail_total_products ); ?></span>
                     <div class="progress-bar-wrapper">
                         <span class="card_count_label squalomail_product_count_partial"></span>
+                        <div class="progress-bar"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="box sync-stats-card categories" >
+                <div class="sync-stats-card-content">
+                    <span class="card_label"><strong><?php esc_html_e('Categories', 'squalomail-for-woocommerce');?></strong></span>
+                    <span class="card_count" id="squalomail_categories_count"><?php echo number_format($squalomail_total_categories ); ?></span>
+                    <div class="progress-bar-wrapper">
+                        <span class="card_count_label squalomail_category_count_partial"></span>
                         <div class="progress-bar"></div>
                     </div>
                 </div>

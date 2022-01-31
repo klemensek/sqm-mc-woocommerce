@@ -39,6 +39,7 @@ if ( ! class_exists( 'SqualoMail_WooCommerce_Process_Full_Sync_Manager' ) ) {
 			update_option("{$this->plugin_name}-sync.config.resync", false);
 			update_option("{$this->plugin_name}-sync.orders.current_page", 1);
 			update_option("{$this->plugin_name}-sync.products.current_page", 1);
+			update_option("{$this->plugin_name}-sync.categories.current_page", 1);
 			update_option("{$this->plugin_name}-sync.coupons.current_page", 1);
 
 			update_option("{$this->plugin_name}-sync.syncing", true);
@@ -76,6 +77,7 @@ if ( ! class_exists( 'SqualoMail_WooCommerce_Process_Full_Sync_Manager' ) ) {
 			// set the current sync pages back to 1 if the user hits resync.
 			squalomail_set_data('sync.orders.current_page', 1);
 			squalomail_set_data('sync.products.current_page', 1);
+			squalomail_set_data('sync.categories.current_page', 1);
 			squalomail_set_data('sync.coupons.current_page', 1);
 
 			$sync_started_at = get_option('squalomail-woocommerce-sync.started_at');
@@ -104,6 +106,7 @@ if ( ! class_exists( 'SqualoMail_WooCommerce_Process_Full_Sync_Manager' ) ) {
 			$started = array(
 				'coupons' => get_option('squalomail-woocommerce-sync.coupons.started_at'),
 				'products' => get_option('squalomail-woocommerce-sync.products.started_at'),
+				'categories' => get_option('squalomail-woocommerce-sync.categories.started_at'),
 				'orders' => get_option('squalomail-woocommerce-sync.orders.started_at')
 			);
 
@@ -111,6 +114,7 @@ if ( ! class_exists( 'SqualoMail_WooCommerce_Process_Full_Sync_Manager' ) ) {
 			$completed = array(
 				'coupons' => get_option('squalomail-woocommerce-sync.coupons.completed_at'),
 				'products' => get_option('squalomail-woocommerce-sync.products.completed_at'),
+				'categories' => get_option('squalomail-woocommerce-sync.categories.completed_at'),
 				'orders' => get_option('squalomail-woocommerce-sync.orders.completed_at')
 			);
 
@@ -147,15 +151,37 @@ if ( ! class_exists( 'SqualoMail_WooCommerce_Process_Full_Sync_Manager' ) ) {
 					// since we skipped the orders feed we can delete this option.
 					delete_option('squalomail-woocommerce-sync.orders.prevent');	
 				}
-				
 			}
 
-			if ($completed['orders']) {
-				if (squalomail_get_remaining_jobs_count('SqualoMail_WooCommerce_Single_Order') <= 0 && squalomail_get_remaining_jobs_count('SqualoMail_WooCommerce_Process_Orders') <= 0) {
-					$this->flag_stop_sync();
-                    try {
-                        as_unschedule_action('SqualoMail_WooCommerce_Process_Full_Sync_Manager', array(), 'sqm-woocommerce' );
-                    } catch (\Exception $e) {}
+			// Only start categories when product jobs are all finished
+			if ($completed['products'] && !$started['categories'] ) {
+				// check if we have products still to be synced
+				if (squalomail_get_remaining_jobs_count('SqualoMail_WooCommerce_Single_Product') == 0 && squalomail_get_remaining_jobs_count('SqualoMail_WooCommerce_Process_Products') <= 0) {
+					$prevent_categories_sync = get_option('squalomail-woocommerce-sync.categories.prevent', false);
+
+					// only do this if we're not strictly syncing products ( which is the default ).
+					if (!$prevent_categories_sync) {
+						// since the products are all good, let's sync up the orders now.
+
+						$categories_sync = new SqualoMail_WooCommerce_Process_Categories();
+						$categories_sync->createSyncManagers();
+					}
+
+					// since we skipped the orders feed we can delete this option.
+					delete_option('squalomail-woocommerce-sync.categories.prevent');	
+				}
+			}
+
+			if ($completed['orders'] && $completed['categories']) {
+				if (squalomail_get_remaining_jobs_count('SqualoMail_WooCommerce_Single_Order') <= 0 &&
+						squalomail_get_remaining_jobs_count('SqualoMail_WooCommerce_Process_Orders') <= 0 &&
+						squalomail_get_remaining_jobs_count('SqualoMail_WooCommerce_Process_Categories') <= 0 )
+					{
+						$this->flag_stop_sync();
+						try {
+							as_unschedule_action('SqualoMail_WooCommerce_Process_Full_Sync_Manager', array(), 'sqm-woocommerce' );
+						} catch (\Exception $e) {
+					}
 				}	
 			}
 		}

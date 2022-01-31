@@ -362,6 +362,12 @@ class SqualoMail_WooCommerce
             $this->loader->add_action('wp_trash_post', $service, 'handlePostTrashed', 10, 1);
             $this->loader->add_action('untrashed_post', $service, 'handlePostRestored', 10, 1);
 
+            // category hooks
+            $this->loader->add_action('edited_product_cat', $service, 'handleCategorySaved', 10, 2);
+            $this->loader->add_action('created_product_cat', $service, 'handleCategorySaved', 10, 2);
+            $this->loader->add_action('delete_product_cat', $service, 'handleCategoryDeleted', 10, 4);
+            $this->loader->add_action('set_object_terms', $service, 'handlePostCategoryUpdate', 10, 6);
+
 			//coupons
             $this->loader->add_action('woocommerce_new_coupon', $service, 'handleNewCoupon', 10, 1);
             $this->loader->add_action('woocommerce_coupon_options_save', $service, 'handleCouponSaved', 10, 2);
@@ -389,11 +395,13 @@ class SqualoMail_WooCommerce
                 "SqualoMail_WooCommerce_Single_Order",
                 "SqualoMail_WooCommerce_SingleCoupon",
                 "SqualoMail_WooCommerce_Single_Product",
+                "SqualoMail_WooCommerce_Product_Category",
                 "SqualoMail_WooCommerce_Cart_Update",
                 "SqualoMail_WooCommerce_User_Submit",
                 "SqualoMail_WooCommerce_Process_Coupons",
                 "SqualoMail_WooCommerce_Process_Orders",
-                "SqualoMail_WooCommerce_Process_Products"
+                "SqualoMail_WooCommerce_Process_Products",
+                "SqualoMail_WooCommerce_Process_Categories"
             );
             foreach ($jobs_classes as $job_class) {
                 $this->loader->add_action($job_class, $service, 'squalomail_process_single_job', 10, 1);

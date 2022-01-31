@@ -104,16 +104,20 @@ class SqualoMail_WooCommerce_Rest_Api
         $complete = array(
             'coupons' => get_option('squalomail-woocommerce-sync.coupons.completed_at'),
             'products' => get_option('squalomail-woocommerce-sync.products.completed_at'),
+            'categories' => get_option('squalomail-woocommerce-sync.categories.completed_at'),
             'orders' => get_option('squalomail-woocommerce-sync.orders.completed_at')
         );
 
         $promo_rules_count = squalomail_get_coupons_count();
         $product_count = squalomail_get_product_count();
+        $category_count = squalomail_get_category_count();
         $order_count = squalomail_get_order_count();
 
         $squalomail_total_promo_rules = $complete['coupons'] ? $promo_rules_count - squalomail_get_remaining_jobs_count('SqualoMail_WooCommerce_SingleCoupon') : 0;
         $squalomail_total_products = $complete['products'] ? $product_count - squalomail_get_remaining_jobs_count('SqualoMail_WooCommerce_Single_Product') : 0;
+        $squalomail_total_categories = $complete['categories'] ? $category_count - squalomail_get_remaining_jobs_count('SqualoMail_WooCommerce_Product_Category') : 0;
         $squalomail_total_orders = $complete['orders'] ? $order_count - squalomail_get_remaining_jobs_count('SqualoMail_WooCommerce_Single_Order') : 0;
+
         // try {
         //     $promo_rules = $api->getPromoRules($store_id, 1, 1, 1);
         //     $squalomail_total_promo_rules = $promo_rules['total_items'];
@@ -140,6 +144,8 @@ class SqualoMail_WooCommerce_Rest_Api
             
             'products_in_store' => $product_count,
             'products_in_squalomail' => $squalomail_total_products,
+            'categories_in_store' => $category_count,
+            'categories_in_squalomail' => $squalomail_total_categories,
             
             'orders_in_store' => $order_count,
             'orders_in_squalomail' => $squalomail_total_orders,

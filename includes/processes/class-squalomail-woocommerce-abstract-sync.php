@@ -71,6 +71,9 @@ abstract class SqualoMail_WooCommerce_Abstract_Sync extends Squalomail_Woocommer
             case 'products':
                 $post_count = squalomail_get_product_count();
                break;
+            case 'categories':
+                $post_count = squalomail_get_category_count();
+               break;
             case 'orders':
                 $post_count = squalomail_get_order_count();
                break;
@@ -186,6 +189,9 @@ abstract class SqualoMail_WooCommerce_Abstract_Sync extends Squalomail_Woocommer
                    break;
                 case 'products':
                     squalomail_handle_or_queue(new SqualoMail_WooCommerce_Single_Product($resource));
+                   break;
+                case 'categories':
+                    squalomail_handle_or_queue(new SqualoMail_WooCommerce_Product_Category($resource));
                    break;
                 case 'orders':
                     $order = new SqualoMail_WooCommerce_Single_Order($resource);
