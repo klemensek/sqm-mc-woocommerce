@@ -79,6 +79,10 @@ class SqualoMail_WooCommerce_Single_Order extends Squalomail_Woocommerce_Job
             return false;
         }
 
+        if(class_exists('SitePress')) {
+            do_action( 'wpml_switch_language', $this->user_language );
+        }
+
         $store_id = squalomail_get_store_id();
 
         if (!($woo_order_number = $this->getRealOrderNumber())) {
