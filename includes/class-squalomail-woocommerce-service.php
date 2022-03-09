@@ -669,7 +669,7 @@ class SqualoMail_Service extends SqualoMail_WooCommerce_Options
         if (!empty($http_referer)) {
 
             // grab the current landing url since it's a referral.
-            $landing_site = home_url() . wp_unslash($_SERVER['REQUEST_URI']);
+            $landing_site = home_url(wp_unslash($_SERVER['REQUEST_URI']));
 
             $compare_refer = str_replace(array('http://', 'https://'), '', $http_referer);
             $compare_local = str_replace(array('http://', 'https://'), '', $landing_site);

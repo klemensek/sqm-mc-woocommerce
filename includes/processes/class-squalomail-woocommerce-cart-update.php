@@ -102,6 +102,10 @@ class SqualoMail_WooCommerce_Cart_Update extends Squalomail_Woocommerce_Job
      */
     public function process()
     {
+        if(class_exists('SitePress')) {
+            do_action( 'wpml_switch_language', $this->user_language );
+        }
+        
         try {
 
             if (!squalomail_is_configured() || !($api = squalomail_get_api())) {
