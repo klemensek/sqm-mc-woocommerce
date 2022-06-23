@@ -394,8 +394,8 @@ class SqualoMail_WooCommerce_Transform_Orders
 
         $params = array(
             'post_type' => 'shop_order',
-            //'post_status' => array_keys(wc_get_order_statuses()),
-            'post_status' => 'wc-completed',
+            'post_status' => array_keys(wc_get_order_statuses()),
+            // 'post_status' => 'wc-completed',
             'posts_per_page' => $posts,
             'offset' => $offset,
             'orderby' => 'id',
