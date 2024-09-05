@@ -149,10 +149,10 @@ function squalomail_as_push( Squalomail_Woocommerce_Job $job, $delay = 0 ) {
         );
 
         $existing_actions =  function_exists('as_get_scheduled_actions') ? as_get_scheduled_actions(array(
-            'hook' => get_class($job),
-            'status' => ActionScheduler_Store::STATUS_PENDING,
-            'args' => array(
-                'obj_id' => isset($job->id) ? $job->id : null),
+                'hook' => get_class($job),
+                'status' => ActionScheduler_Store::STATUS_PENDING,
+                'args' => array(
+                    'obj_id' => isset($job->id) ? $job->id : null),
                 'group' => 'sqm-woocommerce'
             )
         ) : null;
@@ -248,7 +248,7 @@ function squalomail_get_remaining_jobs_count($job_hook) {
             'per_page' => -1,
         ), 'ids'
     ) : null;
-    // squalomail_log('sync.full_sync_manager.queue', "counting {$job_hook} actions:", array($existing_actions));		
+    // squalomail_log('sync.full_sync_manager.queue', "counting {$job_hook} actions:", array($existing_actions));
     return count($existing_actions);
 }
 
@@ -523,7 +523,7 @@ function squalomail_get_timezone($humanReadable = false) {
         $timezone = "UTC" . $offset .' '. $timezone_string;
     }
     else if ($humanReadable && !$timezone_string) {
-         $timezone = "UTC" . $offset;
+        $timezone = "UTC" . $offset;
     }
     else if (!$timezone_string) {
         $timezone = $offset;
@@ -979,7 +979,7 @@ function squalomail_get_transient_email_key($email) {
  * @return bool
  */
 function squalomail_tell_system_about_user_submit($email, $status_meta, $seconds = 60) {
-   return squalomail_set_transient(squalomail_get_transient_email_key($email), $status_meta, $seconds);
+    return squalomail_set_transient(squalomail_get_transient_email_key($email), $status_meta, $seconds);
 }
 
 /**
@@ -1015,8 +1015,8 @@ function squalomail_check_if_on_sync_tab() {
             return false;
         }
         else if (isset($options['active_tab']) && $options['active_tab'] === 'sync') {
-			return true;
-		}
+            return true;
+        }
     }
     return false;
 }
