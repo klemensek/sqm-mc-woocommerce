@@ -22,7 +22,7 @@ spl_autoload_register(function($class) {
         'Squalomail_Woocommerce_Deactivation_Survey' => 'includes/class-squalomail-woocommerce-deactivation-survey.php',
         'SqualoMail_WooCommerce_Rest_Api' => 'includes/class-squalomail-woocommerce-rest-api.php',
         'Squalomail_Wocoomerce_CLI' => 'includes/class-squalomail-woocommerce-cli.php',
-        
+
         // includes/api/assets
         'SqualoMail_WooCommerce_Address' => 'includes/api/assets/class-squalomail-address.php',
         'SqualoMail_WooCommerce_Cart' => 'includes/api/assets/class-squalomail-cart.php',
@@ -68,7 +68,7 @@ spl_autoload_register(function($class) {
         'SqualoMail_WooCommerce_Process_Full_Sync_Manager' => 'includes/processes/class-squalomail-woocommerce-full-sync-manager.php',
         'SqualoMail_WooCommerce_Product_Category' => 'includes/processes/class-squalomail-woocommerce-product-category.php',
         'SqualoMail_WooCommerce_Process_Categories' => 'includes/processes/class-squalomail-woocommerce-process-categories.php',
-        
+
         'SqualoMail_WooCommerce_Public' => 'public/class-squalomail-woocommerce-public.php',
         'SqualoMail_WooCommerce_Admin' => 'admin/class-squalomail-woocommerce-admin.php',
     );
@@ -101,18 +101,18 @@ function squalomail_environment_variables() {
 
 /**
  * Remove pending jobs.
- * 
+ *
  * @param string $job
  * @param string $jobId
  */
 function squalomail_unqueue($job, $jobId) {
     $existing_actions = function_exists('as_get_scheduled_actions') ? as_get_scheduled_actions(array(
-        'hook' => $job, 
-        'status' => ActionScheduler_Store::STATUS_PENDING,  
+        'hook' => $job,
+        'status' => ActionScheduler_Store::STATUS_PENDING,
         'args' => array('obj_id' => $jobId),
         'group' => 'sqm-woocommerce'
     )) : null;
-    
+
     if (!empty($existing_actions)) {
         try {
             as_unschedule_action($job, array('obj_id' => $jobId), 'sqm-woocommerce');
@@ -128,18 +128,18 @@ function squalomail_unqueue($job, $jobId) {
  *
  * @return true
  */
-function squalomail_as_push( Squalomail_Woocommerce_Job $job, $delay = 0 ) {			
+function squalomail_as_push( Squalomail_Woocommerce_Job $job, $delay = 0 ) {
     global $wpdb;
     $current_page = isset($job->current_page) && $job->current_page >= 0 ? $job->current_page : false;
     $job_id = isset($job->id) ? $job->id : ($current_page ? $job->current_page : get_class($job));
 
 
     $message = ($job_id != get_class($job)) ? ' :: '. (isset($job->current_page) ? 'page ' : 'obj_id ') . $job_id : '';
-    
+
     $attempts = $job->get_attempts() > 0 ? ' attempt:' . $job->get_attempts() : '';
 
     if ($job->get_attempts() <= 5) {
-        
+
         $jobSerialized = maybe_serialize($job);
         $createdAt = gmdate( 'Y-m-d H:i:s', time() );
         $args = array(
@@ -147,16 +147,16 @@ function squalomail_as_push( Squalomail_Woocommerce_Job $job, $delay = 0 ) {
             'obj_id' => $job_id,
             'created_at'   => $createdAt
         );
-        
+
         $existing_actions =  function_exists('as_get_scheduled_actions') ? as_get_scheduled_actions(array(
-            'hook' => get_class($job), 
-            'status' => ActionScheduler_Store::STATUS_PENDING,  
-            'args' => array(
-                'obj_id' => isset($job->id) ? $job->id : null), 
+                'hook' => get_class($job),
+                'status' => ActionScheduler_Store::STATUS_PENDING,
+                'args' => array(
+                    'obj_id' => isset($job->id) ? $job->id : null),
                 'group' => 'sqm-woocommerce'
             )
         ) : null;
-        
+
         if (!empty($existing_actions)) {
             try {
                 as_unschedule_action(get_class($job), array('obj_id' => $job->id), 'sqm-woocommerce');
@@ -188,7 +188,7 @@ function squalomail_as_push( Squalomail_Woocommerce_Job $job, $delay = 0 ) {
                 }
             }
         }
-        
+
         $action_args = array(
             'obj_id' => $job_id,
         );
@@ -198,15 +198,15 @@ function squalomail_as_push( Squalomail_Woocommerce_Job $job, $delay = 0 ) {
         }
 
         $action = as_schedule_single_action( strtotime( '+'.$delay.' seconds' ), get_class($job), $action_args, "sqm-woocommerce");
-      
+
         if (!empty($existing_actions)) {
             squalomail_debug('action_scheduler.reschedule_job', get_class($job) . ($delay > 0 ? ' restarts in '.$delay. ' seconds' : ' re-queued' ) . $message . $attempts);
-        } 
+        }
         else {
             squalomail_log('action_scheduler.queue_job', get_class($job) . ($delay > 0 ? ' starts in '.$delay. ' seconds' : ' queued' ) . $message . $attempts);
         }
-    
-        return $action;	
+
+        return $action;
     }
     else {
         $job->set_attempts(0);
@@ -222,7 +222,7 @@ function squalomail_as_push( Squalomail_Woocommerce_Job $job, $delay = 0 ) {
  * @param bool $force_now
  */
 function squalomail_handle_or_queue(Squalomail_Woocommerce_Job $job, $delay = 0)
-{   
+{
     if ($job instanceof \SqualoMail_WooCommerce_Single_Order && isset($job->id)) {
         // if this is a order process already queued - just skip this
         if (get_site_transient("squalomail_order_being_processed_{$job->id}") == true) {
@@ -231,9 +231,9 @@ function squalomail_handle_or_queue(Squalomail_Woocommerce_Job $job, $delay = 0)
         // tell the system the order is already queued for processing in this saving process - and we don't need to process it again.
         set_site_transient( "squalomail_order_being_processed_{$job->id}", true, 30);
     }
-    
+
     $as_job_id = squalomail_as_push($job, $delay);
-    
+
     if (!is_int($as_job_id)) {
         squalomail_log('action_scheduler.queue_fail', get_class($job) .' FAILED :: as_job_id: '.$as_job_id);
     }
@@ -242,9 +242,9 @@ function squalomail_handle_or_queue(Squalomail_Woocommerce_Job $job, $delay = 0)
 function squalomail_get_remaining_jobs_count($job_hook) {
     $existing_actions =  function_exists('as_get_scheduled_actions') ? as_get_scheduled_actions(
         array(
-            'hook' => $job_hook, 
-            'status' => ActionScheduler_Store::STATUS_PENDING,  
-            'group' => 'sqm-woocommerce', 
+            'hook' => $job_hook,
+            'status' => ActionScheduler_Store::STATUS_PENDING,
+            'group' => 'sqm-woocommerce',
             'per_page' => -1,
         ), 'ids'
     ) : null;
@@ -360,7 +360,7 @@ function squalomail_get_store_id() {
 function squalomail_get_user_tags_to_update($email = null, $order = null) {
     $tags = squalomail_get_option('squalomail_user_tags');
     $formatted_tags = array();
-    
+
     if (!empty($tags)) {
         $tags = explode(',', $tags);
 
@@ -371,7 +371,7 @@ function squalomail_get_user_tags_to_update($email = null, $order = null) {
 
     // apply filter to user custom tags addition/removal
     $formatted_tags = apply_filters('squalomail_user_tags', $formatted_tags, $email, $order);
-    
+
     if (empty($formatted_tags)){
         return false;
     }
@@ -454,7 +454,7 @@ function squalomail_date_utc($date) {
  */
 function squalomail_date_local($date) {
     $timezone = str_replace(':', '', squalomail_get_timezone());
-    
+
     if (is_numeric($date)) {
         $stamp = $date;
         $date = new \DateTime('now', new DateTimeZone('UTC'));
@@ -504,17 +504,17 @@ function squalomail_get_timezone_list() {
 
 /**
  * Gets the current tomezone from wordpress settings
- * 
- * @return String timezone 
+ *
+ * @return String timezone
  */
 function squalomail_get_timezone($humanReadable = false) {
     // get timezone data from options
     $timezone_string = get_option( 'timezone_string' );
     $offset  = get_option( 'gmt_offset' );
-    
+
     $signal = ($offset <=> 0 ) < 0 ? "-" : "+";
     $offset = sprintf('%1s%02d:%02d', $signal, abs((int) $offset), abs(fmod($offset, 1) * 60));
-    
+
     // shows timezone name + offset in hours and minutes, or only the timezone name. If no timezone string is set, show only offset
     if (!$humanReadable && $timezone_string) {
         $timezone = $timezone_string;
@@ -523,12 +523,12 @@ function squalomail_get_timezone($humanReadable = false) {
         $timezone = "UTC" . $offset .' '. $timezone_string;
     }
     else if ($humanReadable && !$timezone_string) {
-         $timezone = "UTC" . $offset;
+        $timezone = "UTC" . $offset;
     }
     else if (!$timezone_string) {
         $timezone = $offset;
     }
-    
+
     return $timezone;
 }
 
@@ -712,7 +712,7 @@ function squalomail_get_category_count() {
 
     if (!empty($terms) && !is_wp_error($terms)) {
         $total = count($terms);
-    } 
+    }
 
     return $total;
 }
@@ -750,8 +750,8 @@ function squalomail_get_order_count() {
 function squalomail_count_posts($type) {
     global $wpdb;
     if ($type === 'shop_order') {
-        $query = "SELECT post_status, COUNT( * ) AS num_posts FROM {$wpdb->posts} WHERE post_type = %s AND post_status = %s";
-        $posts = $wpdb->get_results( $wpdb->prepare($query, $type, 'wc-completed'));
+        $query = "SELECT post_status, COUNT( * ) AS num_posts FROM {$wpdb->posts} WHERE post_type = %s AND post_status IN (%s, %s, %s, %s, %s, %s)  group BY post_status";
+        $posts = $wpdb->get_results( $wpdb->prepare($query, 'shop_order', 'wc-processing', 'wc-on-hold', 'wc-completed', 'wc-cancelled', 'wc-refunded', 'wc-failed' ));
     } else if ($type === 'product') {
         $query = "SELECT post_status, COUNT( * ) AS num_posts FROM {$wpdb->posts} WHERE post_type = %s AND post_status IN (%s, %s, %s) group BY post_status";
         $posts = $wpdb->get_results( $wpdb->prepare($query, $type, 'private', 'publish', 'draft'));
@@ -979,7 +979,7 @@ function squalomail_get_transient_email_key($email) {
  * @return bool
  */
 function squalomail_tell_system_about_user_submit($email, $status_meta, $seconds = 60) {
-   return squalomail_set_transient(squalomail_get_transient_email_key($email), $status_meta, $seconds);
+    return squalomail_set_transient(squalomail_get_transient_email_key($email), $status_meta, $seconds);
 }
 
 /**
@@ -1015,8 +1015,8 @@ function squalomail_check_if_on_sync_tab() {
             return false;
         }
         else if (isset($options['active_tab']) && $options['active_tab'] === 'sync') {
-			return true;
-		}
+            return true;
+        }
     }
     return false;
 }
@@ -1025,9 +1025,9 @@ function squalomail_flush_database_tables() {
     try {
         /** @var \ */
         global $wpdb;
-        
+
         squalomail_delete_as_jobs();
-        
+
         $wpdb->query("TRUNCATE `{$wpdb->prefix}squalomail_carts`");
         $wpdb->query("TRUNCATE `{$wpdb->prefix}squalomail_jobs`");
     } catch (\Exception $e) {}
@@ -1037,9 +1037,9 @@ function squalomail_flush_sync_job_tables() {
     try {
         /** @var \ */
         global $wpdb;
-        
+
         squalomail_delete_as_jobs();
-        
+
         $wpdb->query("TRUNCATE `{$wpdb->prefix}squalomail_jobs`");
     } catch (\Exception $e) {}
 }
@@ -1048,12 +1048,12 @@ function squalomail_delete_as_jobs() {
 
     $existing_as_actions = function_exists('as_get_scheduled_actions') ? as_get_scheduled_actions(
         array(
-            'status' => ActionScheduler_Store::STATUS_PENDING,  
+            'status' => ActionScheduler_Store::STATUS_PENDING,
             'group' => 'sqm-woocommerce',
             'per_page' => -1,
         )
     ) : null;
-    
+
     if (!empty($existing_as_actions)) {
         foreach ($existing_as_actions as $as_action) {
             try {
@@ -1080,7 +1080,7 @@ function squalomail_flush_sync_pointers() {
  */
 function squalomail_clean_database() {
     global $wpdb;
-    
+
     // delete custom tables data
     squalomail_flush_database_tables();
 
@@ -1256,7 +1256,7 @@ function squalomail_member_data_update($user_email = null, $language = null, $ca
         'status_if_new' => $status_if_new,
     ));
     if (!$user_email) return;
-    
+
     $hash = md5(strtolower(trim($user_email)));
     $gdpr_fields_to_save = null;
 
@@ -1268,7 +1268,7 @@ function squalomail_member_data_update($user_email = null, $language = null, $ca
             // update member with new data
             // if the member's subscriber status was transactional - and if we're passing in either one of these options below,
             // we can attach the new status to the member.
-            
+
 
             if ($member['status'] === 'transactional' && in_array($status_if_new, array('subscribed', 'pending'))) {
                 $member['status'] = $status_if_new;
