@@ -247,7 +247,7 @@ class SqualoMail_WooCommerce_Customer
     public function wasSubscribedOnOrder($id)
     {
         // we are saving the post meta for subscribers on each order... so if they have subscribed on checkout
-        $subscriber_meta = get_post_meta($id, 'squalomail_woocommerce_is_subscribed', true);
+        $subscriber_meta = SqualoMail_WooCommerce_HPOS::get_order_meta($id, 'squalomail_woocommerce_is_subscribed', true);
         $subscribed = $subscriber_meta === '' ? false : (bool) $subscriber_meta;
 
         return $this->original_subscriber_status = $subscribed;

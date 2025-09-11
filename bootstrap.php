@@ -22,6 +22,7 @@ spl_autoload_register(function($class) {
         'Squalomail_Woocommerce_Deactivation_Survey' => 'includes/class-squalomail-woocommerce-deactivation-survey.php',
         'SqualoMail_WooCommerce_Rest_Api' => 'includes/class-squalomail-woocommerce-rest-api.php',
         'Squalomail_Wocoomerce_CLI' => 'includes/class-squalomail-woocommerce-cli.php',
+        'SqualoMail_WooCommerce_HPOS' => 'includes/class-squalomail-woocommerce-hpos.php',
         
         // includes/api/assets
         'SqualoMail_WooCommerce_Address' => 'includes/api/assets/class-squalomail-address.php',

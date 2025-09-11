@@ -144,7 +144,7 @@ class SqualoMail_Newsletter extends SqualoMail_WooCommerce_Options
 
         // if we passed in an order id, we update it here.
         if ($order_id) {
-            update_post_meta($order_id, $meta_key, $status);
+            SqualoMail_WooCommerce_HPOS::update_order_meta($order_id, $meta_key, $status);
         }
 
         // if the user is logged in, we will update the status correctly.
