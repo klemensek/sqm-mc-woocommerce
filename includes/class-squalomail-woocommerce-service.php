@@ -89,7 +89,7 @@ class SqualoMail_Service extends SqualoMail_WooCommerce_Options
         // see if we have a session id and a campaign id, also only do this when this user is not the admin.
         $campaign_id = $this->getCampaignTrackingID();
         if (empty($campaign_id)) {
-            $campaign_id =  get_post_meta($order_id, 'squalomail_woocommerce_campaign_id', true);
+            $campaign_id = SqualoMail_WooCommerce_HPOS::get_order_meta($order_id, 'squalomail_woocommerce_campaign_id', true);
             // make sure this campaign ID has a valid format before we submit something
             if (!$this->campaignIdMatchesFormat($campaign_id)) {
                 $campaign = null;
@@ -99,7 +99,7 @@ class SqualoMail_Service extends SqualoMail_WooCommerce_Options
         // grab the landing site cookie if we have one here.
         $landing_site = $this->getLandingSiteCookie();
         if (empty($landing_site)) {
-            $landing_site =  get_post_meta($order_id, 'squalomail_woocommerce_landing_site', true);
+            $landing_site = SqualoMail_WooCommerce_HPOS::get_order_meta($order_id, 'squalomail_woocommerce_landing_site', true);
             if (!$landing_site) $campaign = null;
         }
 
@@ -168,8 +168,8 @@ class SqualoMail_Service extends SqualoMail_WooCommerce_Options
 
         if (isset($tracking)) {
             // update the post meta with campaing tracking details for future sync
-            update_post_meta($order_id, 'squalomail_woocommerce_campaign_id', $campaign_id);
-            update_post_meta($order_id, 'squalomail_woocommerce_landing_site', $landing_site);
+            SqualoMail_WooCommerce_HPOS::update_order_meta($order_id, 'squalomail_woocommerce_campaign_id', $campaign_id);
+            SqualoMail_WooCommerce_HPOS::update_order_meta($order_id, 'squalomail_woocommerce_landing_site', $landing_site);
         }
 
         $handler = new SqualoMail_WooCommerce_Single_Order($order_id, null, $campaign_id, $landing_site, $language, $gdpr_fields);

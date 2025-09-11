@@ -45,3 +45,8 @@ register_activation_hook( __FILE__, 'activate_squalomail_woocommerce');
 
 // plugins loaded callback
 add_action('plugins_loaded', 'squalomail_on_all_plugins_loaded', 12);
+add_action('before_woocommerce_init', function(){
+    if ( class_exists( \Automattic\WooCommerce\Utilities\FeaturesUtil::class ) ) {
+        \Automattic\WooCommerce\Utilities\FeaturesUtil::declare_compatibility( 'custom_order_tables', __FILE__, true );
+    }
+});
