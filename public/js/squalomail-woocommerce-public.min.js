@@ -205,3 +205,29 @@ squalomailReady(function () {
         console.log('squalomail ready error', e);
     }
 });
+
+function emailFieldHasFocus(selector){
+    if (!selector) selector = "#email";
+    var field = document.querySelector(selector);
+    if (!field) return;
+
+    // Attach onblur and onfocus handlers
+    field.onblur = function () {
+        squalomailHandleBillingEmail(selector);
+    };
+    field.onfocus = function () {
+        squalomailHandleBillingEmail(selector);
+    };
+}
+
+window.addEventListener("load", (function () {
+    if (window.wp && wp.hooks && typeof wp.hooks.addAction === "function") {
+        wp.hooks.addAction(
+            'experimental__woocommerce_blocks-checkout-set-email-address',
+            'squalomail-woocommerce',
+            () => {
+                emailFieldHasFocus('#email');
+            }
+        );
+    }
+}));
