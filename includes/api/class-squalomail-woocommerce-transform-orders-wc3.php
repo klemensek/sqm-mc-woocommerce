@@ -101,7 +101,8 @@ class SqualoMail_WooCommerce_Transform_Orders
         $statuses = $this->getOrderStatuses();
 
         // grab the order status and set it into the object for future comparison.
-        $order->setOriginalWooStatus(($status = $woo->get_status()));
+        $status = SqualoMail_WooCommerce_HPOS::getStatus($woo->get_status());
+        $order->setOriginalWooStatus(($status));
 
         // if the order is "on-hold" status, and is not currently in Squalomail, we need to ignore it
         // because the payment gateways are putting this on hold while they navigate to the payment processor
