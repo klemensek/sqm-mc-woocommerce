@@ -138,7 +138,7 @@ class SqualoMail_WooCommerce_HPOS {
         return $orders ? current($orders) : null;
     }
 
-    public static function getStatus($status)
+    public static function normalizeOrderStatus($status)
     {
         $status = str_replace('wc-', '', $status);
         if(in_array($status, ['checkout-draft', 'wc-checkout-draft'])){
