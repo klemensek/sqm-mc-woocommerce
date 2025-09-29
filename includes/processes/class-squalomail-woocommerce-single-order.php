@@ -130,6 +130,12 @@ class SqualoMail_WooCommerce_Single_Order extends Squalomail_Woocommerce_Job
             // transform the order
             $order = $job->transform($order_post);
 
+            // don't allow this to happen.
+            if ($order->getOriginalWooStatus() === 'checkout-draft') {
+                squalomail_log('system.debug', "Order {$woo_order_number} is in draft status and can not be submitted");
+                return false;
+            }
+
             // if the order is new, and has been flagged as a status that should not be pushed over to
             // Squalomail - just ignore it and log it.
             // if ($new_order && $order->shouldIgnoreIfNotInSqualomail()) {

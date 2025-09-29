@@ -141,9 +141,9 @@ class SqualoMail_WooCommerce_HPOS {
     public static function normalizeOrderStatus($status)
     {
         $status = str_replace('wc-', '', $status);
-        if(in_array($status, ['checkout-draft', 'wc-checkout-draft'])){
-            $status = 'pending';
-        }
+//        if(in_array($status, ['checkout-draft', 'wc-checkout-draft'])){
+//            $status = 'pending';
+//        }
 
         return $status;
     }

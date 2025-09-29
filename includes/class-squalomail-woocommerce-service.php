@@ -307,7 +307,7 @@ class SqualoMail_Service extends SqualoMail_WooCommerce_Options
         if (!squalomail_is_configured()) return;
 
         // don't handle any of these statuses because they're not ready for the show
-        if (!in_array($post->post_status, array('trash', 'auto-draft', 'draft', 'pending'))) {
+        if (!in_array($post->post_status, array('trash', 'auto-draft', 'draft', 'pending', 'checkout-draft', 'wc-checkout-draft'))) {
             if ('product' == $post->post_type) {
                 squalomail_handle_or_queue(new SqualoMail_WooCommerce_Single_Product($post_id), 5);
             } elseif ('shop_order' == $post->post_type) {
@@ -413,7 +413,7 @@ class SqualoMail_Service extends SqualoMail_WooCommerce_Options
         if (!squalomail_is_configured() || !($post = get_post($post_id))) return;
 
         // don't handle any of these statuses because they're not ready for the show
-        if (in_array($post->post_status, array('trash', 'auto-draft', 'draft', 'pending'))) {
+        if (in_array($post->post_status, array('trash', 'auto-draft', 'draft', 'pending', 'checkout-draft', 'wc-checkout-draft'))) {
             return;
         }
 
@@ -1001,5 +1001,74 @@ class SqualoMail_Service extends SqualoMail_WooCommerce_Options
     public function squalomail_process_sync_manager () {
         $sync_stats_manager = new SqualoMail_WooCommerce_Process_Full_Sync_Manager();
         $sync_stats_manager->handle();
+    }
+
+    /**
+     * @param $order_id
+     * @param $order
+     */
+    public function handleOrderUpdate($order_id, $order = null) {
+        if (empty($order)) $order = SqualoMail_WooCommerce_HPOS::get_order($order_id);
+
+        squalomail_log('handleOrderUpdate', $order_id .' ' . $order->post_status);
+        if (!in_array($order->post_status, array('trash', 'auto-draft', 'draft', 'pending', 'checkout-draft', 'wc-checkout-draft'))) {
+            squalomail_log('handleOrderUpdate', $order_id .' ' . $order->post_status);
+                $this->onOrderSave($order_id, null, false);
+        }
+    }
+
+    /**
+     * If a product has been updated and isn't an existing post, handle or queue syncing updates.
+     *
+     * @param int     $post_ID           The ID of the post that was updated/created
+     * @param WP_Post $post              The post object that was updated/created
+     * @param bool    $is_existing_post  Whether the updated post existed before the update
+     * @return void
+     */
+    public function handleProductCreated($post_ID, WP_Post $post, $is_existing_post)
+    {
+        // Since the handleProductUpdated() function above handles product updates, bail for existing posts/products.
+        if ($is_existing_post || !squalomail_is_configured()) {
+            return;
+        }
+
+        // If the product is of a certain status, process it. ( old values included 'draft', 'pending')
+        if (!in_array($post->post_status, array('trash', 'auto-draft'))) {
+            squalomail_handle_or_queue(new SqualoMail_WooCommerce_Single_Product($post_ID), 5);
+        }
+    }
+
+    /**
+     * When a product post has been updated, handle or queue syncing when key fields have changed.
+     *
+     * @param int     $post_ID     The ID of the post/product being updated
+     * @param WP_Post $post_after  The post object as it existed before the update
+     * @param WP_Post $post_before The post object as it exists after the update
+     * @return void
+     */
+    public function handleProductUpdated( int $post_ID, WP_Post $post_after, WP_Post $post_before )
+    {
+        if ('product' !== $post_after->post_type) {
+            return;
+        }
+
+        // Only work with products that have certain statuses
+        if (! squalomail_is_configured()) {
+            return;
+        }
+
+        // 'draft', 'pending'
+        if (in_array($post_after->post_status, array('trash', 'auto-draft'))) {
+            squalomail_log('product.update.blocked', "product {$post_ID} was blocked because status is {$post_after->post_status}");
+            return;
+        }
+
+        // Check if product title or description has been altered
+        if ($post_after->post_title !== $post_before->post_title
+            || $post_after->post_content !== $post_before->post_content
+            || $post_after->post_status !== $post_before->post_status
+        ) {
+            squalomail_handle_or_queue( new SqualoMail_WooCommerce_Single_Product($post_ID), 5);
+        }
     }
 }
