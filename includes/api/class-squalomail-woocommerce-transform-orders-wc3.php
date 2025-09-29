@@ -106,7 +106,7 @@ class SqualoMail_WooCommerce_Transform_Orders
         // if the order is "on-hold" status, and is not currently in Squalomail, we need to ignore it
         // because the payment gateways are putting this on hold while they navigate to the payment processor
         // and they technically haven't paid yet.
-        if (in_array($status, array('on-hold', 'failed'))) {
+        if (in_array($status, array('on-hold', 'failed', 'checkout-draft'))) {
             $order->flagAsIgnoreIfNotInSqualomail(true);
         }
 

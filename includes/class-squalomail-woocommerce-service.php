@@ -413,7 +413,7 @@ class SqualoMail_Service extends SqualoMail_WooCommerce_Options
         if (!squalomail_is_configured() || !($post = get_post($post_id))) return;
 
         // don't handle any of these statuses because they're not ready for the show
-        if (in_array($post->post_status, array('trash', 'auto-draft', 'draft', 'pending'))) {
+        if (!in_array($post->post_status, array('trash', 'auto-draft', 'draft', 'pending', 'checkout-draft', 'wc-checkout-draft'))) {
             return;
         }
 
