@@ -138,10 +138,10 @@ class SqualoMail_WooCommerce_Single_Order extends Squalomail_Woocommerce_Job
 
             // if the order is new, and has been flagged as a status that should not be pushed over to
             // Squalomail - just ignore it and log it.
-            // if ($new_order && $order->shouldIgnoreIfNotInSqualomail()) {
-            //     squalomail_log('system.debug', "order {$order->getId()} is in {$order->getOriginalWooStatus()} status, and is being skipped for now.");
-            //     return false;
-            // }
+             if ($new_order && $order->shouldIgnoreIfNotInSqualomail()) {
+                 squalomail_log('system.debug', "order {$order->getId()} is in {$order->getOriginalWooStatus()} status, and is being skipped for now.");
+                 return false;
+             }
             
             // see if we need to prevent this order from being submitted.
             $email = $order->getCustomer()->getEmailAddress();
