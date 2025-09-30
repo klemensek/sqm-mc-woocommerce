@@ -347,7 +347,6 @@ class SqualoMail_WooCommerce
 
 			// order hooks
             $this->loader->add_action('woocommerce_new_order', $service, 'handleNewOrder', 11, 1);
-            $this->loader->add_action('woocommerce_update_order', $service, 'handleOrderUpdate', 10, 2);
             $this->loader->add_action('woocommerce_order_status_changed', $service, 'handleOrderStatusChanged', 11, 3);
 
 			// refunds
@@ -355,13 +354,12 @@ class SqualoMail_WooCommerce
 
 			// cart hooks
             $this->loader->add_filter('woocommerce_update_cart_action_cart_updated', $service, 'handleCartUpdated');
+            $this->loader->add_action('woocommerce_cart_item_set_quantity', $service, 'handleCartUpdated');
 			$this->loader->add_action('woocommerce_add_to_cart', $service, 'handleCartUpdated');
 			$this->loader->add_action('woocommerce_cart_item_removed', $service, 'handleCartUpdated');
 
 			// save post hooks
-            $this->loader->add_action('save_post_product', $service, 'handleProductCreated', 10, 3);
-            $this->loader->add_action('post_updated', $service, 'handleProductUpdated', 10, 3);
-//			$this->loader->add_action('save_post', $service, 'handlePostSaved', 10, 3);
+			$this->loader->add_action('save_post', $service, 'handlePostSaved', 10, 3);
             $this->loader->add_action('wp_trash_post', $service, 'handlePostTrashed', 10, 1);
             $this->loader->add_action('untrashed_post', $service, 'handlePostRestored', 10, 1);
 
