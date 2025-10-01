@@ -354,6 +354,7 @@ class SqualoMail_WooCommerce
 
 			// cart hooks
             $this->loader->add_filter('woocommerce_update_cart_action_cart_updated', $service, 'handleCartUpdated');
+            $this->loader->add_action('woocommerce_cart_item_set_quantity', $service, 'handleCartUpdated');
 			$this->loader->add_action('woocommerce_add_to_cart', $service, 'handleCartUpdated');
 			$this->loader->add_action('woocommerce_cart_item_removed', $service, 'handleCartUpdated');
 
