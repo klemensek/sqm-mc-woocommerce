@@ -31,7 +31,7 @@ if (!defined( 'WP_UNINSTALL_PLUGIN')) {
 }
 
 if (!isset($squalomail_woocommerce_spl_autoloader) || $squalomail_woocommerce_spl_autoloader === false) {
-    include_once "bootstrap.php";
+    include_once __DIR__ . "/bootstrap.php";
 }
 
 function squalomail_woocommerce_uninstall() {

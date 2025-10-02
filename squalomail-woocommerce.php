@@ -36,9 +36,9 @@ if (!defined( 'WPINC')) {
 
 if (!isset($squalomail_woocommerce_spl_autoloader) || $squalomail_woocommerce_spl_autoloader === false) {
     // require Action Scheduler
-    include_once "includes/vendor/action-scheduler/action-scheduler.php";
+    include_once __DIR__ . "/includes/vendor/action-scheduler/action-scheduler.php";
     // bootstrapper
-    include_once "bootstrap.php";
+    include_once __DIR__ . "/bootstrap.php";
 }
 
 register_activation_hook( __FILE__, 'activate_squalomail_woocommerce');
